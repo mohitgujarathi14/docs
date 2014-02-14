@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>BinPy.gates.logic_objects &mdash; BinPy 1.0.8 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="BinPy 1.0.8 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">BinPy 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for BinPy.gates.logic_objects</h1><div class="highlight"><pre>
+<span class="c">#  Define classes for Connector, Logic Circuit, Gate</span>
+
+<div class="viewcode-block" id="Connector"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.Connector">[docs]</a><span class="k">class</span> <span class="nc">Connector</span> <span class="p">:</span>
+
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	The Connector class is the basic object connecting Gate Type Objects. Connectors can</span>
+<span class="sd">	be both input and output. There is no method to check for circular references, so</span>
+<span class="sd">	avoid them. The change in an output is propogated in the output it has. </span>
+
+
+<span class="sd">	Following are the parameters of the Connector Class:</span>
+
+<span class="sd">	owner		: This parameter specifies the Logic Object (Gate, Latch, Flip-Flop) that  </span>
+<span class="sd">						owns this connection.</span>
+
+<span class="sd">	name		: This parameter gives a string name to identify the object</span>
+
+<span class="sd">	monitor : This parameter toggles monitoring the logic level of connection. Useful for </span>
+<span class="sd">						understanding a function, or debugging purposes</span>
+
+<span class="sd">	activates: This parameter activates the Logic Object of the owner object. Every Logic</span>
+<span class="sd">						object has an evaluate function which is triggered by this object.</span>
+
+<span class="sd">	The connector class has two methods, connect() and set() method.</span>
+
+<span class="sd">	connect() : This method connects the given set of inputs to the Logic Object</span>
+
+<span class="sd">	set()			: This method sets the value for the connection, depending on whether it </span>
+<span class="sd">							needs to be assigned values or evaluated as output,</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+
+
+	<span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">owner</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">activates</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">monitor</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">connected</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="p">:</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">owner</span> <span class="o">=</span> <span class="n">owner</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">name</span>  <span class="o">=</span> <span class="n">name</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">monitor</span>  <span class="o">=</span> <span class="n">monitor</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">connects</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">activates</span> <span class="o">=</span> <span class="n">activates</span> 
+		<span class="bp">self</span><span class="o">.</span><span class="n">connected</span> <span class="o">=</span> <span class="n">connected</span>  
+
+<div class="viewcode-block" id="Connector.connect"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.Connector.connect">[docs]</a>	<span class="k">def</span> <span class="nf">connect</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span> <span class="p">:</span>
+		<span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">([])</span> <span class="p">:</span> <span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">inputs</span><span class="p">]</span>
+		<span class="k">for</span> <span class="nb">input</span> <span class="ow">in</span> <span class="n">inputs</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">connects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="Connector.set"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.Connector.set">[docs]</a>	<span class="k">def</span> <span class="nf">set</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="p">:</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">value</span> <span class="p">:</span> <span class="k">return</span> 
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">activates</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">owner</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">monitor</span> <span class="p">:</span>
+			<span class="c">#print &quot;Connector %s-%s set to %s&quot; % (self.owner.name,self.name,self.value)</span>
+			<span class="k">pass</span>
+		<span class="k">for</span> <span class="n">con</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connects</span> <span class="p">:</span> <span class="n">con</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Connector.getState"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.Connector.getState">[docs]</a>	<span class="k">def</span> <span class="nf">getState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+
+</div></div>
+<div class="viewcode-block" id="LC"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.LC">[docs]</a><span class="k">class</span> <span class="nc">LC</span> <span class="p">:</span>
+
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	Basic Logic Class object. Every Object class has an evaluate function which is </span>
+<span class="sd">	inherited in all the classes derived from it. </span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="p">:</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+<div class="viewcode-block" id="LC.evaluate"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.LC.evaluate">[docs]</a>	<span class="k">def</span> <span class="nf">evaluate</span> <span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span> <span class="k">return</span>
+
+</div></div>
+<div class="viewcode-block" id="Not"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.Not">[docs]</a><span class="k">class</span> <span class="nc">Not</span> <span class="p">(</span><span class="n">LC</span><span class="p">)</span> <span class="p">:</span> 
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	Not gate using the LC class</span>
+<span class="sd">	&#39;&#39;&#39;</span> 																							
+	<span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="p">:</span>
+		<span class="n">LC</span><span class="o">.</span><span class="n">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="n">Connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="n">activates</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">Connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;B&#39;</span><span class="p">,</span><span class="n">monitor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Not.evaluate"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.Not.evaluate">[docs]</a>	<span class="k">def</span> <span class="nf">evaluate</span> <span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>			
+
+</div></div>
+<div class="viewcode-block" id="Gate2"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.Gate2">[docs]</a><span class="k">class</span> <span class="nc">Gate2</span> <span class="p">(</span><span class="n">LC</span><span class="p">)</span> <span class="p">:</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	Base class for 2 input gates</span>
+<span class="sd">	&#39;&#39;&#39;</span> 
+	<span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="p">:</span>
+		<span class="n">LC</span><span class="o">.</span><span class="n">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="n">Connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;A&#39;</span><span class="p">,</span><span class="n">activates</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">Connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;B&#39;</span><span class="p">,</span><span class="n">activates</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">C</span> <span class="o">=</span> <span class="n">Connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;C&#39;</span><span class="p">,</span> <span class="n">monitor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="And"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.And">[docs]</a><span class="k">class</span> <span class="nc">And</span> <span class="p">(</span><span class="n">Gate2</span><span class="p">)</span> <span class="p">:</span>   
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	And gate using the Gate2 class</span>
+<span class="sd">	&#39;&#39;&#39;</span> 
+	<span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="p">:</span>
+		<span class="n">Gate2</span><span class="o">.</span><span class="n">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<div class="viewcode-block" id="And.evaluate"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.And.evaluate">[docs]</a>	<span class="k">def</span> <span class="nf">evaluate</span> <span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="Or"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.Or">[docs]</a><span class="k">class</span> <span class="nc">Or</span> <span class="p">(</span><span class="n">Gate2</span><span class="p">)</span> <span class="p">:</span> 
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	Or gate using the Gate2 class</span>
+<span class="sd">	&#39;&#39;&#39;</span> 
+	<span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="p">:</span>
+		<span class="n">Gate2</span><span class="o">.</span><span class="n">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<div class="viewcode-block" id="Or.evaluate"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.Or.evaluate">[docs]</a>	<span class="k">def</span> <span class="nf">evaluate</span> <span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="Xor"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.Xor">[docs]</a><span class="k">class</span> <span class="nc">Xor</span> <span class="p">(</span><span class="n">Gate2</span><span class="p">)</span> <span class="p">:</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	Xor gate using the Gate2 class.</span>
+<span class="sd">	This class uses the previous And and Not classes from above and connects them via a</span>
+<span class="sd">	connector object. This forms the basis of combinational logic with these objects</span>
+<span class="sd">	&#39;&#39;&#39;</span> 
+	<span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="p">:</span>
+		<span class="n">Gate2</span><span class="o">.</span><span class="n">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">A1</span> <span class="o">=</span> <span class="n">And</span><span class="p">(</span><span class="s">&quot;A1&quot;</span><span class="p">)</span> 
+		<span class="bp">self</span><span class="o">.</span><span class="n">A2</span> <span class="o">=</span> <span class="n">And</span><span class="p">(</span><span class="s">&quot;A2&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">I1</span> <span class="o">=</span> <span class="n">Not</span><span class="p">(</span><span class="s">&quot;I1&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">I2</span> <span class="o">=</span> <span class="n">Not</span><span class="p">(</span><span class="s">&quot;I2&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">O1</span> <span class="o">=</span> <span class="n">Or</span> <span class="p">(</span><span class="s">&quot;O1&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">A1</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">I2</span><span class="o">.</span><span class="n">A</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">I1</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">A2</span><span class="o">.</span><span class="n">A</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">I1</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">connect</span> <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">A1</span><span class="o">.</span><span class="n">B</span> <span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">I2</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">connect</span> <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">A2</span><span class="o">.</span><span class="n">B</span> <span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">A1</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">connect</span> <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">O1</span><span class="o">.</span><span class="n">A</span> <span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">A2</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">connect</span> <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">O1</span><span class="o">.</span><span class="n">B</span> <span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">O1</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">connect</span> <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">C</span> <span class="p">])</span>
+</div>
+<div class="viewcode-block" id="Nand"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.Nand">[docs]</a><span class="k">class</span> <span class="nc">Nand</span> <span class="p">(</span><span class="n">Gate2</span><span class="p">)</span> <span class="p">:</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	Nand gate using the Gate2 class</span>
+<span class="sd">	&#39;&#39;&#39;</span>       
+	<span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="p">:</span>
+		<span class="n">Gate2</span><span class="o">.</span><span class="n">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<div class="viewcode-block" id="Nand.evaluate"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.Nand.evaluate">[docs]</a>	<span class="k">def</span> <span class="nf">evaluate</span> <span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="ow">not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+</div></div>
+<div class="viewcode-block" id="Nor"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.Nor">[docs]</a><span class="k">class</span> <span class="nc">Nor</span> <span class="p">(</span><span class="n">Gate2</span><span class="p">)</span> <span class="p">:</span>       
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	Nor gate using the Gate2 class</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="p">:</span>
+		<span class="n">Gate2</span><span class="o">.</span><span class="n">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<div class="viewcode-block" id="Nor.evaluate"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.Nor.evaluate">[docs]</a>	<span class="k">def</span> <span class="nf">evaluate</span> <span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="ow">not</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+</div></div>
+<div class="viewcode-block" id="Xnor"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.Xnor">[docs]</a><span class="k">class</span> <span class="nc">Xnor</span> <span class="p">(</span><span class="n">Gate2</span><span class="p">)</span> <span class="p">:</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	Xnor gate using the Gate2 class</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
+		<span class="n">Gate2</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">A1</span> <span class="o">=</span> <span class="n">And</span><span class="p">(</span><span class="s">&quot;A1&quot;</span><span class="p">)</span> 
+		<span class="bp">self</span><span class="o">.</span><span class="n">A2</span> <span class="o">=</span> <span class="n">And</span><span class="p">(</span><span class="s">&quot;A2&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">I1</span> <span class="o">=</span> <span class="n">Not</span><span class="p">(</span><span class="s">&quot;I1&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">I2</span> <span class="o">=</span> <span class="n">Not</span><span class="p">(</span><span class="s">&quot;I2&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">N1</span> <span class="o">=</span> <span class="n">Nor</span> <span class="p">(</span><span class="s">&quot;O1&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">connect</span>    <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">A1</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">I2</span><span class="o">.</span><span class="n">A</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">connect</span>    <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">I1</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">A2</span><span class="o">.</span><span class="n">A</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">I1</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">connect</span> <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">A1</span><span class="o">.</span><span class="n">B</span> <span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">I2</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">connect</span> <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">A2</span><span class="o">.</span><span class="n">B</span> <span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">A1</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">connect</span> <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">N1</span><span class="o">.</span><span class="n">A</span> <span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">A2</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">connect</span> <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">N1</span><span class="o">.</span><span class="n">B</span> <span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">N1</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">connect</span> <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">C</span> <span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="HalfAdder"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.HalfAdder">[docs]</a><span class="k">class</span> <span class="nc">HalfAdder</span> <span class="p">(</span><span class="n">LC</span><span class="p">)</span> <span class="p">:</span> 
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	Half Adder class using Xor and And objects</span>
+<span class="sd">	&#39;&#39;&#39;</span> 
+	<span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="p">:</span>
+		<span class="n">LC</span><span class="o">.</span><span class="n">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="n">Connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;A&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">Connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;B&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">=</span> <span class="n">Connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;S&#39;</span><span class="p">,</span><span class="n">monitor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">Cout</span> <span class="o">=</span> <span class="n">Connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;Cout&#39;</span><span class="p">,</span><span class="n">monitor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">X1</span><span class="o">=</span> <span class="n">Xor</span><span class="p">(</span><span class="s">&quot;X1&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">A1</span><span class="o">=</span> <span class="n">And</span><span class="p">(</span><span class="s">&quot;A1&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">X1</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">A1</span><span class="o">.</span><span class="n">A</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">X1</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">A1</span><span class="o">.</span><span class="n">B</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">X1</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">connect</span> <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">A1</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">connect</span> <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cout</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="FullAdder"><a class="viewcode-back" href="../../../BinPy.gates.html#BinPy.gates.logic_objects.FullAdder">[docs]</a><span class="k">class</span> <span class="nc">FullAdder</span> <span class="p">(</span><span class="n">LC</span><span class="p">)</span> <span class="p">:</span> 
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	Full Adder class using the Half Adder object</span>
+<span class="sd">	&#39;&#39;&#39;</span> 
+	<span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="p">:</span>
+		<span class="n">LC</span><span class="o">.</span><span class="n">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="o">=</span> <span class="n">Connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;A&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="o">=</span> <span class="n">Connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;B&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">Cin</span>  <span class="o">=</span> <span class="n">Connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;Cin&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="o">=</span> <span class="n">Connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;S&#39;</span><span class="p">,</span><span class="n">monitor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">Cout</span> <span class="o">=</span> <span class="n">Connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;Cout&#39;</span><span class="p">,</span><span class="n">monitor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">H1</span><span class="o">=</span> <span class="n">HalfAdder</span><span class="p">(</span><span class="s">&quot;H1&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">H2</span><span class="o">=</span> <span class="n">HalfAdder</span><span class="p">(</span><span class="s">&quot;H2&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">O1</span><span class="o">=</span> <span class="n">Or</span><span class="p">(</span><span class="s">&quot;O1&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">H1</span><span class="o">.</span><span class="n">A</span> <span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">H1</span><span class="o">.</span><span class="n">B</span> <span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">Cin</span><span class="o">.</span><span class="n">connect</span>  <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">H2</span><span class="o">.</span><span class="n">A</span> <span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">H1</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">connect</span> <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">H2</span><span class="o">.</span><span class="n">B</span> <span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">H1</span><span class="o">.</span><span class="n">Cout</span><span class="o">.</span><span class="n">connect</span> <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">O1</span><span class="o">.</span><span class="n">B</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">H2</span><span class="o">.</span><span class="n">Cout</span><span class="o">.</span><span class="n">connect</span> <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">O1</span><span class="o">.</span><span class="n">A</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">H2</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">connect</span> <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">O1</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">connect</span> <span class="p">([</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cout</span><span class="p">])</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">BinPy 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, BinPy.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

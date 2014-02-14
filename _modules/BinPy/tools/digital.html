@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>BinPy.tools.digital &mdash; BinPy 1.0.8 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="BinPy 1.0.8 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">BinPy 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for BinPy.tools.digital</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">BinPy</span> <span class="kn">import</span> <span class="n">Connector</span><span class="p">,</span> <span class="n">LC</span>
+
+<div class="viewcode-block" id="Clock"><a class="viewcode-back" href="../../../BinPy.tools.html#BinPy.tools.digital.Clock">[docs]</a><span class="k">class</span> <span class="nc">Clock</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	This class uses threading technique to create a clock with a certain time period.</span>
+<span class="sd">	This is how you can create a clock with this class:</span>
+<span class="sd">		&gt;&gt;&gt; myClock = Clock(0,time_period=2,name=&quot;My First Clock&quot;)</span>
+<span class="sd">		&gt;&gt;&gt; myClock.start()		#Do not call run method</span>
+<span class="sd">		&gt;&gt;&gt; myClock.getState()</span>
+<span class="sd">		0</span>
+<span class="sd">	</span>
+<span class="sd">	Note: Once you are done with the clock, use myClock.kill() to kill the clock.</span>
+<span class="sd">		  Running too many clocks will unnecessarily overload the CPU. </span>
+<span class="sd">	</span>
+<span class="sd">	Following are the parameters of the class</span>
+
+<span class="sd">		frequency:		It will decide time interval of the clock, use SI unit i.e. Hertz</span>
+<span class="sd">		time_period:	It will also decide time interval of the clock, use SI unit i.e. second</span>
+
+<span class="sd">		If time_period and frequency both have been provided, then time_period will override frequency</span>
+<span class="sd">		If nothing is provided, then it will set time_period = 1s by default</span>
+
+<span class="sd">		init_state:		It is the initial state of the clock(1 by default)</span>
+<span class="sd">		name:			It is the name of the clock.(optional)</span>
+<span class="sd">	</span>
+<span class="sd">	Methods :	start(), getState(), setState(value), getName(), getTimePeriod(), kill()</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_state</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">frequency</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">time_period</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+		<span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">frequency</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">time_period</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">frequency</span>
+		<span class="k">if</span> <span class="n">time_period</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">time_period</span> <span class="o">=</span> <span class="n">time_period</span>
+		<span class="k">if</span> <span class="n">time_period</span><span class="o">==</span><span class="bp">None</span> <span class="ow">and</span> <span class="n">frequency</span><span class="o">==</span><span class="bp">None</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">time_period</span> <span class="o">=</span> <span class="mi">1</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">init_state</span> <span class="o">=</span> <span class="n">init_state</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">curr_state</span> <span class="o">=</span> <span class="n">init_state</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">exitFlag</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="n">Connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="n">activates</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">monitor</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__toggleState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		This is an internal method to toggle the state of the output</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">curr_state</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">curr_state</span> <span class="o">=</span> <span class="mi">0</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">curr_state</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">curr_state</span> <span class="o">=</span> <span class="mi">1</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">curr_state</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__main_func</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exitFlag</span><span class="p">:</span>
+				<span class="n">thread</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+			<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_period</span><span class="p">)</span>
+			<span class="k">try</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">__toggleState</span><span class="p">()</span>
+			<span class="k">except</span><span class="p">:</span>
+				<span class="k">pass</span>
+
+<div class="viewcode-block" id="Clock.getState"><a class="viewcode-back" href="../../../BinPy.tools.html#BinPy.tools.digital.Clock.getState">[docs]</a>	<span class="k">def</span> <span class="nf">getState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Returns the current state of the clock</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">curr_state</span>
+</div>
+<div class="viewcode-block" id="Clock.setState"><a class="viewcode-back" href="../../../BinPy.tools.html#BinPy.tools.digital.Clock.setState">[docs]</a>	<span class="k">def</span> <span class="nf">setState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Resets the state of the clock to the passed value</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">curr_state</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span> <span class="k">return</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">curr_state</span> <span class="o">=</span> <span class="n">value</span>
+</div>
+<div class="viewcode-block" id="Clock.getTimePeriod"><a class="viewcode-back" href="../../../BinPy.tools.html#BinPy.tools.digital.Clock.getTimePeriod">[docs]</a>	<span class="k">def</span> <span class="nf">getTimePeriod</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Returns the time period of the clock</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_period</span>
+</div>
+<div class="viewcode-block" id="Clock.getName"><a class="viewcode-back" href="../../../BinPy.tools.html#BinPy.tools.digital.Clock.getName">[docs]</a>	<span class="k">def</span> <span class="nf">getName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Returns the name of the clock</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+</div>
+<div class="viewcode-block" id="Clock.kill"><a class="viewcode-back" href="../../../BinPy.tools.html#BinPy.tools.digital.Clock.kill">[docs]</a>	<span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Kills the clock(Thread)</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">exitFlag</span> <span class="o">=</span> <span class="mi">1</span>
+</div>
+<div class="viewcode-block" id="Clock.run"><a class="viewcode-back" href="../../../BinPy.tools.html#BinPy.tools.digital.Clock.run">[docs]</a>	<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">__main_func</span><span class="p">()</span>
+
+</div></div>
+<div class="viewcode-block" id="DigitDisplay"><a class="viewcode-back" href="../../../BinPy.tools.html#BinPy.tools.digital.DigitDisplay">[docs]</a><span class="k">class</span> <span class="nc">DigitDisplay</span><span class="p">:</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	This class emulates a 7 segmented display(Common Cathode)</span>
+
+<span class="sd">	Parameters:</span>
+<span class="sd">		name:	A name given to an object(Optional)</span>
+
+<span class="sd">	Methods:</span>
+<span class="sd">		evaluate()</span>
+<span class="sd">		getName()</span>
+
+<span class="sd">	How to use:</span>
+<span class="sd">		&gt;&gt;&gt; myDisplay = DigitDisplay(&quot;Display1&quot;)</span>
+<span class="sd">		&gt;&gt;&gt; print myDisplay.evaluate([1,1,1,1,1,1,1])</span>
+<span class="sd">		8</span>
+<span class="sd">	Note:</span>
+<span class="sd">		You can either pass complete list of 10 pins [pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, pin9, pin10]</span>
+<span class="sd">		in standard order (see http://tronixstuff.files.wordpress.com/2010/05/7segpinout.jpg) or you can directly</span>
+<span class="sd">		pass the list of values corresponding to a, b, c, d, e, f and g in lexicographical order.</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+<div class="viewcode-block" id="DigitDisplay.evaluate"><a class="viewcode-back" href="../../../BinPy.tools.html#BinPy.tools.digital.DigitDisplay.evaluate">[docs]</a>	<span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pin_conf</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method evaluates the values passed according to the display and returns</span>
+<span class="sd">		an integer varying from 0 to 9</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pin_conf</span><span class="p">)</span><span class="o">!=</span><span class="mi">10</span><span class="p">:</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pin_conf</span><span class="p">)</span><span class="o">!=</span><span class="mi">7</span><span class="p">:</span>
+				<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;There must be 10 or 7 values&quot;</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pin_conf</span><span class="p">)</span><span class="o">==</span><span class="mi">10</span><span class="p">:</span>
+			<span class="n">vcc</span> <span class="o">=</span> <span class="n">pin_conf</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">or</span> <span class="n">pin_conf</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
+			<span class="n">a</span> <span class="o">=</span> <span class="n">pin_conf</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+			<span class="n">b</span> <span class="o">=</span> <span class="n">pin_conf</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+			<span class="n">c</span> <span class="o">=</span> <span class="n">pin_conf</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+			<span class="n">d</span> <span class="o">=</span> <span class="n">pin_conf</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+			<span class="n">e</span> <span class="o">=</span> <span class="n">pin_conf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+			<span class="n">f</span> <span class="o">=</span> <span class="n">pin_conf</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+			<span class="n">g</span> <span class="o">=</span> <span class="n">pin_conf</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>
+		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pin_conf</span><span class="p">)</span><span class="o">==</span><span class="mi">7</span><span class="p">:</span>
+			<span class="n">a</span> <span class="o">=</span> <span class="n">pin_conf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+			<span class="n">b</span> <span class="o">=</span> <span class="n">pin_conf</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+			<span class="n">c</span> <span class="o">=</span> <span class="n">pin_conf</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+			<span class="n">d</span> <span class="o">=</span> <span class="n">pin_conf</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+			<span class="n">e</span> <span class="o">=</span> <span class="n">pin_conf</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+			<span class="n">f</span> <span class="o">=</span> <span class="n">pin_conf</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+			<span class="n">g</span> <span class="o">=</span> <span class="n">pin_conf</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+			<span class="n">vcc</span><span class="o">=</span><span class="mi">1</span>			
+		<span class="k">if</span> <span class="n">vcc</span><span class="p">:</span>
+			<span class="n">test</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">]</span>
+			<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;0&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="s">&#39;1&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="s">&#39;2&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>\
+			<span class="s">&#39;3&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="s">&#39;4&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="s">&#39;5&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="s">&#39;6&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>\
+			<span class="s">&#39;7&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="s">&#39;8&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="s">&#39;9&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]}</span>
+			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">test</span><span class="o">==</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+					<span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">None</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">None</span>
+
+		<span class="k">def</span> <span class="nf">getName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">BinPy 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, BinPy.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

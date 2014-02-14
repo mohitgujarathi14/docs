@@ -1,0 +1,346 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>BinPy.combi_logic.mux_demux &mdash; BinPy 1.0.8 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="BinPy 1.0.8 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">BinPy 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for BinPy.combi_logic.mux_demux</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">BinPy</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="MUX"><a class="viewcode-back" href="../../../BinPy.combi_logic.html#BinPy.combi_logic.mux_demux.MUX">[docs]</a><span class="k">class</span> <span class="nc">MUX</span><span class="p">:</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	This class can be used to create MUX in your circuit. It has a method for each kind of</span>
+<span class="sd">	MUX, namely, mux_2_1, mux_4_1, mux_8_1 and mux_16_1</span>
+<span class="sd">	All the methods take 3 parameters(inputs, select lines and strobe). Strobe is high by default</span>
+<span class="sd">	inputs and select_inputs are lists. First index of input is &#39;A&#39;, second index is &#39;B&#39; and so on...</span>
+<span class="sd">	But last index of select_inputs is &#39;S0&#39;, second last index is &#39;S1&#39; and so on...</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">gates</span> <span class="o">=</span> <span class="n">Gates</span><span class="p">()</span>
+
+<div class="viewcode-block" id="MUX.run"><a class="viewcode-back" href="../../../BinPy.combi_logic.html#BinPy.combi_logic.mux_demux.MUX.run">[docs]</a>	<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">			This method takes 3 parameters [inputs(list),select_inputs(list), optional strobe(int)]</span>
+<span class="sd">			This method automatically classifies the type of MUX and returns the computed result(int)</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">allowed</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">]</span>
+		<span class="n">mux_type</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">mux_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allowed</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;ERROR: only 4 types of MUX are supported, namely, 2:1, 4:1, 8:1 and 16:1&quot;</span><span class="p">)</span>
+		<span class="k">if</span> <span class="mi">2</span><span class="o">**</span><span class="nb">len</span><span class="p">(</span><span class="n">select_inputs</span><span class="p">)</span><span class="o">!=</span><span class="n">mux_type</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;ERROR: no of select inputs do not comply with no of inputs&quot;</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">mux_type</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mux_2_1</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">mux_type</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mux_4_1</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">mux_type</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mux_8_1</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">mux_type</span> <span class="o">==</span> <span class="mi">16</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mux_16_1</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="MUX.mux_2_1"><a class="viewcode-back" href="../../../BinPy.combi_logic.html#BinPy.combi_logic.mux_demux.MUX.mux_2_1">[docs]</a>	<span class="k">def</span> <span class="nf">mux_2_1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method implements 2:1 MUX using logic gates</span>
+<span class="sd">		Input and output is same as run() method</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">s</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="n">a</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="n">b</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">OR</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s</span><span class="p">)),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">s</span><span class="p">))</span>
+		<span class="k">if</span> <span class="n">strobe</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">result</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="MUX.mux_4_1"><a class="viewcode-back" href="../../../BinPy.combi_logic.html#BinPy.combi_logic.mux_demux.MUX.mux_4_1">[docs]</a>	<span class="k">def</span> <span class="nf">mux_4_1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method implements 4:1 MUX using logic gates</span>
+<span class="sd">		Input and output is same as run() method</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">select_inputs</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">s0</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="n">s1</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">inputs</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">inputs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+		<span class="n">term1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">))</span>
+		<span class="n">term2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">s0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">))</span>
+		<span class="n">term3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">),</span><span class="n">s1</span><span class="p">)</span>
+		<span class="n">term4</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">s0</span><span class="p">,</span><span class="n">s1</span><span class="p">)</span>
+		<span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">OR</span><span class="p">(</span><span class="n">term1</span><span class="p">,</span><span class="n">term2</span><span class="p">,</span><span class="n">term3</span><span class="p">,</span><span class="n">term4</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">strobe</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">result</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="MUX.mux_8_1"><a class="viewcode-back" href="../../../BinPy.combi_logic.html#BinPy.combi_logic.mux_demux.MUX.mux_8_1">[docs]</a>	<span class="k">def</span> <span class="nf">mux_8_1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method implements 8:1 MUX using logic gates</span>
+<span class="sd">		Input and output is same as run() method</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">select_inputs</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">s0</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="n">s1</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">s2</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+		<span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">h</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">inputs</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">inputs</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">inputs</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span><span class="n">inputs</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span><span class="n">inputs</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span><span class="n">inputs</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
+		<span class="n">term1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">))</span>
+		<span class="n">term2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="n">s0</span><span class="p">)</span>
+		<span class="n">term3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span><span class="n">s1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">))</span>
+		<span class="n">term4</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span><span class="n">s1</span><span class="p">,</span><span class="n">s0</span><span class="p">)</span>
+		<span class="n">term5</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">))</span>
+		<span class="n">term6</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="n">s0</span><span class="p">)</span>
+		<span class="n">term7</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">))</span>
+		<span class="n">term8</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span><span class="n">s0</span><span class="p">)</span>
+		<span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">OR</span><span class="p">(</span><span class="n">term1</span><span class="p">,</span><span class="n">term2</span><span class="p">,</span><span class="n">term3</span><span class="p">,</span><span class="n">term4</span><span class="p">,</span><span class="n">term5</span><span class="p">,</span><span class="n">term6</span><span class="p">,</span><span class="n">term7</span><span class="p">,</span><span class="n">term8</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">strobe</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">result</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="MUX.mux_16_1"><a class="viewcode-back" href="../../../BinPy.combi_logic.html#BinPy.combi_logic.mux_demux.MUX.mux_16_1">[docs]</a>	<span class="k">def</span> <span class="nf">mux_16_1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method implements 16:1 MUX using two 8:1 MUX and one 2:1 MUX</span>
+<span class="sd">		Input and output is same as run() method</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">select_inputs</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">s0</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="n">s1</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">s2</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+		<span class="n">s3</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+		<span class="n">first_mux_8_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mux_8_1</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">],[</span><span class="n">s2</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span><span class="n">s0</span><span class="p">])</span>
+		<span class="n">second_mux_8_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mux_8_1</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">8</span><span class="p">:],[</span><span class="n">s2</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span><span class="n">s0</span><span class="p">])</span>
+		<span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mux_2_1</span><span class="p">([</span><span class="n">first_mux_8_1</span><span class="p">,</span><span class="n">second_mux_8_1</span><span class="p">],[</span><span class="n">s3</span><span class="p">])</span>
+		<span class="k">if</span> <span class="n">strobe</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">result</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+		
+</div></div>
+<div class="viewcode-block" id="DEMUX"><a class="viewcode-back" href="../../../BinPy.combi_logic.html#BinPy.combi_logic.mux_demux.DEMUX">[docs]</a><span class="k">class</span> <span class="nc">DEMUX</span><span class="p">:</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	This class can be used to create DEMUX in your circuit. It has a method for each kind of</span>
+<span class="sd">	DEMUX, namely, demux_1_2, demux_1_4, demux_1_8 and demux_1_16</span>
+<span class="sd">	All the methods take 3 parameters(inputs, select lines and strobe). Strobe is high by default</span>
+<span class="sd">	inputs and select_inputs are lists. First index of input is &#39;A&#39;, second index is &#39;B&#39; and so on...</span>
+<span class="sd">	But last index of select_inputs is &#39;S0&#39;, second last index is &#39;S1&#39; and so on...</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">gates</span> <span class="o">=</span> <span class="n">Gates</span><span class="p">()</span>
+
+<div class="viewcode-block" id="DEMUX.run"><a class="viewcode-back" href="../../../BinPy.combi_logic.html#BinPy.combi_logic.mux_demux.DEMUX.run">[docs]</a>	<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">			This method takes 3 parameters [inputs(list),select_inputs(list), optional strobe(int)]</span>
+<span class="sd">			This method automatically classifies the type of DEMUX and returns the computed result(int)</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">allowed</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+		<span class="n">mux_type</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">select_inputs</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">mux_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allowed</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;ERROR: only 4 types of DEMUX are supported, namely, 1:2, 1:4, 1:8 and 1:16&quot;</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span><span class="o">!=</span><span class="mi">1</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;ERROR: DEMUX can have only 1 input line&quot;</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">mux_type</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">demux_1_2</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">mux_type</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">demux_1_4</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">mux_type</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">demux_1_8</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">mux_type</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">demux_1_16</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DEMUX.demux_1_2"><a class="viewcode-back" href="../../../BinPy.combi_logic.html#BinPy.combi_logic.mux_demux.DEMUX.demux_1_2">[docs]</a>	<span class="k">def</span> <span class="nf">demux_1_2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method implements 1:2 DEMUX using logic gates</span>
+<span class="sd">		Input and output is same as run() method</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
+		
+		<span class="n">s</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="n">a</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		
+		<span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="n">strobe</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">output</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+					<span class="n">output</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="n">w</span><span class="p">])</span>
+			 
+		<span class="k">return</span> <span class="n">output</span>
+</div>
+<div class="viewcode-block" id="DEMUX.demux_1_4"><a class="viewcode-back" href="../../../BinPy.combi_logic.html#BinPy.combi_logic.mux_demux.DEMUX.demux_1_4">[docs]</a>	<span class="k">def</span> <span class="nf">demux_1_4</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method implements 1:4 DEMUX using logic gates</span>
+<span class="sd">		Input and output is same as run() method</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
+
+		<span class="n">select_inputs</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">s0</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="n">s1</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">a</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+		<span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span> <span class="n">a</span><span class="p">)</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">s0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span> <span class="n">a</span><span class="p">)</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">),</span> <span class="n">s1</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">s0</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+		
+		<span class="k">if</span> <span class="n">strobe</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">output</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+					<span class="n">output</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="n">w</span><span class="p">])</span>
+
+		<span class="k">return</span> <span class="n">output</span>
+</div>
+<div class="viewcode-block" id="DEMUX.demux_1_8"><a class="viewcode-back" href="../../../BinPy.combi_logic.html#BinPy.combi_logic.mux_demux.DEMUX.demux_1_8">[docs]</a>	<span class="k">def</span> <span class="nf">demux_1_8</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method implements 1:8 DEMUX using logic gates</span>
+<span class="sd">		Input and output is same as run() method</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
+
+		<span class="n">select_inputs</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">s0</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="n">s1</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">s2</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+		<span class="n">a</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>		
+		
+		<span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">))</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="n">s0</span><span class="p">)</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span><span class="n">s1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">))</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span><span class="n">s1</span><span class="p">,</span><span class="n">s0</span><span class="p">)</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">))</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="n">s0</span><span class="p">)</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">))</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span><span class="n">s0</span><span class="p">)</span>
+		
+		<span class="k">if</span> <span class="n">strobe</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">output</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+					<span class="n">output</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="n">w</span><span class="p">])</span>
+
+		<span class="k">return</span> <span class="n">output</span>
+</div>
+<div class="viewcode-block" id="DEMUX.demux_1_16"><a class="viewcode-back" href="../../../BinPy.combi_logic.html#BinPy.combi_logic.mux_demux.DEMUX.demux_1_16">[docs]</a>	<span class="k">def</span> <span class="nf">demux_1_16</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputs</span><span class="p">,</span><span class="n">select_inputs</span><span class="p">,</span><span class="n">strobe</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method implements 1:16 DEMUX using logic gates</span>
+<span class="sd">		Input and output is the same  as run() method</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
+
+		<span class="n">select_inputs</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">s0</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="n">s1</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">s2</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+		<span class="n">s3</span> <span class="o">=</span> <span class="n">select_inputs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+		<span class="n">a</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+		<span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s3</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">))</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s3</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="n">s0</span><span class="p">)</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s3</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span><span class="n">s1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">))</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s3</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span><span class="n">s1</span><span class="p">,</span><span class="n">s0</span><span class="p">)</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s3</span><span class="p">),</span><span class="n">s2</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">))</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s3</span><span class="p">),</span><span class="n">s2</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="n">s0</span><span class="p">)</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s3</span><span class="p">),</span><span class="n">s2</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">))</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s3</span><span class="p">),</span><span class="n">s2</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span><span class="n">s0</span><span class="p">)</span>
+
+		<span class="n">output</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">s3</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">))</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">s3</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="n">s0</span><span class="p">)</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">s3</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span><span class="n">s1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">))</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">s3</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s2</span><span class="p">),</span><span class="n">s1</span><span class="p">,</span><span class="n">s0</span><span class="p">)</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">s3</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">))</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">s3</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span><span class="n">s0</span><span class="p">)</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">s3</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">s0</span><span class="p">))</span>
+		<span class="n">output</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">s3</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span><span class="n">s0</span><span class="p">)</span>
+			
+		<span class="c">#todo: can this be made using 1:4 and 1:8 demultiplexers? Code too inefficient</span>
+		
+		<span class="k">if</span> <span class="n">strobe</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">output</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+					<span class="n">output</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="n">w</span><span class="p">])</span>
+
+		<span class="k">return</span> <span class="n">output</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">BinPy 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, BinPy.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

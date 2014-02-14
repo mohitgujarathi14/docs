@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>BinPy.combi_logic.encoder_decoder &mdash; BinPy 1.0.8 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="BinPy 1.0.8 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">BinPy 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for BinPy.combi_logic.encoder_decoder</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">BinPy</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="Decoder"><a class="viewcode-back" href="../../../BinPy.combi_logic.html#BinPy.combi_logic.encoder_decoder.Decoder">[docs]</a><span class="k">class</span> <span class="nc">Decoder</span><span class="p">:</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	This class can be used to create decoder in your circuit. It has a method for each kind of</span>
+<span class="sd">	decoder, namely, decoder_2_4</span>
+<span class="sd">	All the methods take 2 parameters(inputs and strobe) and give . Strobe is high by default</span>
+<span class="sd">	inputs are lists. It give a list a output.</span>
+<span class="sd">	Last index of inputs is &#39;a&#39;, second last index is &#39;b&#39; and so on...</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">gates</span> <span class="o">=</span> <span class="n">Gates</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Decoder.run"><a class="viewcode-back" href="../../../BinPy.combi_logic.html#BinPy.combi_logic.encoder_decoder.Decoder.run">[docs]</a>	<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputs</span><span class="p">,</span><span class="n">strobe</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">			This method takes 2 parameters [inputs(list),optional strobe(int)]</span>
+<span class="sd">			This method automatically classifies the type of decoder and returns the computed s(list)</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">allowed</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+		<span class="n">decoder_type</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">decoder_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allowed</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;ERROR: only 3 types of decoders are supported, namely, 1:2,2:4,3:8&quot;</span><span class="p">)</span>
+	
+		<span class="k">if</span> <span class="n">decoder_type</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder_1_2</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span><span class="n">strobe</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">decoder_type</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder_2_4</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span><span class="n">strobe</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">decoder_type</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder_3_8</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span><span class="n">strobe</span><span class="p">)</span>
+		</div>
+<div class="viewcode-block" id="Decoder.decoder_1_2"><a class="viewcode-back" href="../../../BinPy.combi_logic.html#BinPy.combi_logic.encoder_decoder.Decoder.decoder_1_2">[docs]</a>	<span class="k">def</span> <span class="nf">decoder_1_2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputs</span><span class="p">,</span><span class="n">strobe</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method implements 1:2 decoder using logic gates</span>
+<span class="sd">		Input and output is same as run() method</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">s</span> <span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+		<span class="n">a</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">a</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span>
+		<span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+		
+		<span class="k">if</span> <span class="n">strobe</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">s</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">false</span>
+	</div>
+<div class="viewcode-block" id="Decoder.decoder_2_4"><a class="viewcode-back" href="../../../BinPy.combi_logic.html#BinPy.combi_logic.encoder_decoder.Decoder.decoder_2_4">[docs]</a>	<span class="k">def</span> <span class="nf">decoder_2_4</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputs</span><span class="p">,</span><span class="n">strobe</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method implements 2:4 decoder using logic gates</span>
+<span class="sd">		Input and output is same as run() method</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">s</span> <span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
+		<span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">a</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+		<span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+		<span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">a</span><span class="p">),</span><span class="n">b</span><span class="p">)</span>
+		<span class="n">s</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+		
+		<span class="k">if</span> <span class="n">strobe</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">s</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">false</span>
+</div>
+<div class="viewcode-block" id="Decoder.decoder_3_8"><a class="viewcode-back" href="../../../BinPy.combi_logic.html#BinPy.combi_logic.encoder_decoder.Decoder.decoder_3_8">[docs]</a>	<span class="k">def</span> <span class="nf">decoder_3_8</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputs</span><span class="p">,</span><span class="n">strobe</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method implements 3:8 decoder using logic gates</span>
+<span class="sd">		Input and output is same as run() method</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">s</span> <span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)]</span>
+		<span class="n">inputs</span> <span class="o">=</span><span class="n">inputs</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">inputs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+		<span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">c</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">b</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+		<span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">c</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">b</span><span class="p">),</span><span class="n">a</span><span class="p">)</span>
+		<span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">c</span><span class="p">),</span><span class="n">b</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+		<span class="n">s</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">c</span><span class="p">),</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+		<span class="n">s</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">b</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+		<span class="n">s</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">b</span><span class="p">),</span><span class="n">a</span><span class="p">)</span>
+		<span class="n">s</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+		<span class="n">s</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+		
+		<span class="k">if</span> <span class="n">strobe</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">s</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">false</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">BinPy 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, BinPy.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>
