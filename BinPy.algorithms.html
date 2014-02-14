@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>BinPy.algorithms package &mdash; BinPy 1.0.8 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="BinPy 1.0.8 documentation" href="index.html" />
+    <link rel="up" title="BinPy package" href="BinPy.html" />
+    <link rel="next" title="BinPy.binary package" href="BinPy.binary.html" />
+    <link rel="prev" title="BinPy package" href="BinPy.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="BinPy.binary.html" title="BinPy.binary package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="BinPy.html" title="BinPy package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">BinPy 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="BinPy.html" accesskey="U">BinPy package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="binpy-algorithms-package">
+<h1>BinPy.algorithms package<a class="headerlink" href="#binpy-algorithms-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-BinPy.algorithms.AnalogFormulas">
+<span id="binpy-algorithms-analogformulas-module"></span><h2>BinPy.algorithms.AnalogFormulas module<a class="headerlink" href="#module-BinPy.algorithms.AnalogFormulas" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="BinPy.algorithms.AnalogFormulas.OhmsLaw">
+<em class="property">class </em><tt class="descclassname">BinPy.algorithms.AnalogFormulas.</tt><tt class="descname">OhmsLaw</tt><a class="reference internal" href="_modules/BinPy/algorithms/AnalogFormulas.html#OhmsLaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.AnalogFormulas.OhmsLaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class implements Ohm&#8217;s law for circuit analysis
+It requires any two parameters and it will calculate the other two.</p>
+<dl class="docutils">
+<dt>How to use:</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">myCalc</span> <span class="o">=</span> <span class="n">OhmsLaw</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">myCalc</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">1254.8</span><span class="p">,</span><span class="n">i</span><span class="o">=</span><span class="mf">7.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="s">&#39;i&#39;</span><span class="p">:</span> <span class="mf">7.5</span><span class="p">,</span> <span class="s">&#39;p&#39;</span><span class="p">:</span> <span class="mf">1254.8</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">:</span> <span class="mf">22.307555555555556</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">:</span> <span class="mf">167.30666666666667</span><span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+<dt>Methods:</dt>
+<dd>evaluate(i=None,v=None,r=None,p=None)</dd>
+</dl>
+<dl class="method">
+<dt id="BinPy.algorithms.AnalogFormulas.OhmsLaw.evaluate">
+<tt class="descname">evaluate</tt><big>(</big><em>i=None</em>, <em>v=None</em>, <em>r=None</em>, <em>p=None</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/AnalogFormulas.html#OhmsLaw.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.AnalogFormulas.OhmsLaw.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns a dictionary of current, voltage, power, and resistance
+DictKeys: &#8216;i&#8217;, &#8216;v&#8217;, &#8216;r&#8217;, &#8216;p&#8217;</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-BinPy.algorithms.MooreOptimizer">
+<span id="binpy-algorithms-mooreoptimizer-module"></span><h2>BinPy.algorithms.MooreOptimizer module<a class="headerlink" href="#module-BinPy.algorithms.MooreOptimizer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="BinPy.algorithms.MooreOptimizer.StateMachineOptimizer">
+<em class="property">class </em><tt class="descclassname">BinPy.algorithms.MooreOptimizer.</tt><tt class="descname">StateMachineOptimizer</tt><big>(</big><em>state_tran</em>, <em>state_word_len</em>, <em>variables</em>, <em>outputs</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#StateMachineOptimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.StateMachineOptimizer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="BinPy.algorithms.MooreOptimizer.StateMachineOptimizer.calc_total">
+<tt class="descname">calc_total</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#StateMachineOptimizer.calc_total"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.StateMachineOptimizer.calc_total" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the total count of possible permutations of state configurations.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.algorithms.MooreOptimizer.StateMachineOptimizer_AllPermutations">
+<em class="property">class </em><tt class="descclassname">BinPy.algorithms.MooreOptimizer.</tt><tt class="descname">StateMachineOptimizer_AllPermutations</tt><big>(</big><em>state_tran</em>, <em>state_word_len</em>, <em>variables</em>, <em>outputs</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#StateMachineOptimizer_AllPermutations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.StateMachineOptimizer_AllPermutations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.algorithms.MooreOptimizer.StateMachineOptimizer" title="BinPy.algorithms.MooreOptimizer.StateMachineOptimizer"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.algorithms.MooreOptimizer.StateMachineOptimizer</span></tt></a></p>
+<dl class="method">
+<dt id="BinPy.algorithms.MooreOptimizer.StateMachineOptimizer_AllPermutations.optimize">
+<tt class="descname">optimize</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#StateMachineOptimizer_AllPermutations.optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.StateMachineOptimizer_AllPermutations.optimize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.algorithms.MooreOptimizer.StateMachineOptimizer_FileAndVerify">
+<em class="property">class </em><tt class="descclassname">BinPy.algorithms.MooreOptimizer.</tt><tt class="descname">StateMachineOptimizer_FileAndVerify</tt><big>(</big><em>state_tran</em>, <em>state_word_len</em>, <em>variables</em>, <em>outputs</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#StateMachineOptimizer_FileAndVerify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.StateMachineOptimizer_FileAndVerify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.algorithms.MooreOptimizer.StateMachineOptimizer" title="BinPy.algorithms.MooreOptimizer.StateMachineOptimizer"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.algorithms.MooreOptimizer.StateMachineOptimizer</span></tt></a></p>
+<dl class="method">
+<dt id="BinPy.algorithms.MooreOptimizer.StateMachineOptimizer_FileAndVerify.optimize">
+<tt class="descname">optimize</tt><big>(</big><em>file</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#StateMachineOptimizer_FileAndVerify.optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.StateMachineOptimizer_FileAndVerify.optimize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.algorithms.MooreOptimizer.StateMachineOptimizer_Random">
+<em class="property">class </em><tt class="descclassname">BinPy.algorithms.MooreOptimizer.</tt><tt class="descname">StateMachineOptimizer_Random</tt><big>(</big><em>state_tran</em>, <em>state_word_len</em>, <em>variables</em>, <em>outputs</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#StateMachineOptimizer_Random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.StateMachineOptimizer_Random" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.algorithms.MooreOptimizer.StateMachineOptimizer" title="BinPy.algorithms.MooreOptimizer.StateMachineOptimizer"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.algorithms.MooreOptimizer.StateMachineOptimizer</span></tt></a></p>
+<dl class="method">
+<dt id="BinPy.algorithms.MooreOptimizer.StateMachineOptimizer_Random.optimize">
+<tt class="descname">optimize</tt><big>(</big><em>tries=1000</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#StateMachineOptimizer_Random.optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.StateMachineOptimizer_Random.optimize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.algorithms.MooreOptimizer.StateMachineSolver">
+<em class="property">class </em><tt class="descclassname">BinPy.algorithms.MooreOptimizer.</tt><tt class="descname">StateMachineSolver</tt><big>(</big><em>state_tran</em>, <em>state_word_len</em>, <em>variables</em>, <em>outputs</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#StateMachineSolver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.StateMachineSolver" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="class">
+<dt id="BinPy.algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer">
+<em class="property">class </em><tt class="descname">InternalOptimizer</tt><big>(</big><em>state_word_len</em>, <em>variables</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#StateMachineSolver.InternalOptimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="class">
+<dt id="BinPy.algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer.State">
+<em class="property">class </em><tt class="descname">State</tt><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#StateMachineSolver.InternalOptimizer.State"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer.State" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="BinPy.algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer.Variables">
+<em class="property">class </em><tt class="descclassname">StateMachineSolver.InternalOptimizer.</tt><tt class="descname">Variables</tt><big>(</big><em>variables</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#StateMachineSolver.InternalOptimizer.Variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer.Variables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="BinPy.algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer.evaluate">
+<tt class="descclassname">StateMachineSolver.InternalOptimizer.</tt><tt class="descname">evaluate</tt><big>(</big><em>f_array</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#StateMachineSolver.InternalOptimizer.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluates a list of lambda expressions in the state and variables
+environment. The lambda expressions are terms of an OR expression.</p>
+<p>f_array: a list of lambda expressions</p>
+<p>returns: the logical OR after evaluate the lambda expression in the setup
+environment</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="BinPy.algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer.get_function">
+<tt class="descclassname">StateMachineSolver.InternalOptimizer.</tt><tt class="descname">get_function</tt><big>(</big><em>minterms</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#StateMachineSolver.InternalOptimizer.get_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer.get_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a human readable form of the given function.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="BinPy.algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer.solve">
+<tt class="descclassname">StateMachineSolver.InternalOptimizer.</tt><tt class="descname">solve</tt><big>(</big><em>f_on</em>, <em>f_off=None</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#StateMachineSolver.InternalOptimizer.solve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer.solve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a function that satisfies the conditions given.</p>
+<p>f_on: a list of lambda expressions; if one of the lambda expressions
+evaluates to True then the requested function should evaluate to True
+f_off: a list of lambda expressions; if one of them evaluates to True
+then the requested function whould evaluate to False</p>
+<p>returns: a tuple a,b; a is the complexity of the function and b is the
+function</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="BinPy.algorithms.MooreOptimizer.StateMachineSolver.print_solution">
+<tt class="descclassname">StateMachineSolver.</tt><tt class="descname">print_solution</tt><big>(</big><em>state_map</em>, <em>solution</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#StateMachineSolver.print_solution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.StateMachineSolver.print_solution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print a solution.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="BinPy.algorithms.MooreOptimizer.StateMachineSolver.solve">
+<tt class="descclassname">StateMachineSolver.</tt><tt class="descname">solve</tt><big>(</big><em>state_map</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#StateMachineSolver.solve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.StateMachineSolver.solve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a state map return the transition and output functions.</p>
+<p>state_map: a dictionary; key is the state and value is the value of the
+state word that identifies this state</p>
+<p>returns: a tuple a,b,c; a is the sum of the functions&#8217; complexities, b is
+the next state functions (one for each state word bit) and c is the output
+functions</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="BinPy.algorithms.MooreOptimizer.main">
+<tt class="descclassname">BinPy.algorithms.MooreOptimizer.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/MooreOptimizer.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.MooreOptimizer.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-BinPy.algorithms.QuineMcCluskey">
+<span id="binpy-algorithms-quinemccluskey-module"></span><h2>BinPy.algorithms.QuineMcCluskey module<a class="headerlink" href="#module-BinPy.algorithms.QuineMcCluskey" title="Permalink to this headline">¶</a></h2>
+<p>This class implements the Quine-McCluskey algorithm for minimization of boolean
+functions.</p>
+<p>Based on code from Robert Dick &lt;<a class="reference external" href="mailto:dickrp&#37;&#52;&#48;eecs&#46;umich&#46;edu">dickrp<span>&#64;</span>eecs<span>&#46;</span>umich<span>&#46;</span>edu</a>&gt; and Pat Maupin
+&lt;<a class="reference external" href="mailto:pmaupin&#37;&#52;&#48;gmail&#46;com">pmaupin<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;. Most of the original code was re-written for performance
+reasons.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span> <span class="o">=</span> <span class="n">QM</span><span class="p">([</span><span class="s">&#39;A&#39;</span><span class="p">,</span><span class="s">&#39;B&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">get_function</span><span class="p">(</span><span class="n">qm</span><span class="o">.</span><span class="n">solve</span><span class="p">([])[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&#39;0&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">get_function</span><span class="p">(</span><span class="n">qm</span><span class="o">.</span><span class="n">solve</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&#39;1&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">get_function</span><span class="p">(</span><span class="n">qm</span><span class="o">.</span><span class="n">solve</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&#39;1&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">get_function</span><span class="p">(</span><span class="n">qm</span><span class="o">.</span><span class="n">solve</span><span class="p">([</span><span class="mi">3</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&#39;(A AND B)&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">get_function</span><span class="p">(</span><span class="n">qm</span><span class="o">.</span><span class="n">solve</span><span class="p">([</span><span class="mi">0</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&#39;((NOT A) AND (NOT B))&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">get_function</span><span class="p">(</span><span class="n">qm</span><span class="o">.</span><span class="n">solve</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&#39;A&#39;ls</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">get_function</span><span class="p">(</span><span class="n">qm</span><span class="o">.</span><span class="n">solve</span><span class="p">([</span><span class="mi">1</span><span class="p">],[</span><span class="mi">3</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&#39;A&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">get_function</span><span class="p">(</span><span class="n">qm</span><span class="o">.</span><span class="n">solve</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&#39;B&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">get_function</span><span class="p">(</span><span class="n">qm</span><span class="o">.</span><span class="n">solve</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&#39;(NOT A)&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">get_function</span><span class="p">(</span><span class="n">qm</span><span class="o">.</span><span class="n">solve</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&#39;(NOT B)&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">get_function</span><span class="p">(</span><span class="n">qm</span><span class="o">.</span><span class="n">solve</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&#39;(A OR B)&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">get_function</span><span class="p">(</span><span class="n">qm</span><span class="o">.</span><span class="n">solve</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">&#39;((NOT B) OR (NOT A))&#39;</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="BinPy.algorithms.QuineMcCluskey.QM">
+<em class="property">class </em><tt class="descclassname">BinPy.algorithms.QuineMcCluskey.</tt><tt class="descname">QM</tt><big>(</big><em>variables</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/QuineMcCluskey.html#QM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.QuineMcCluskey.QM" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="BinPy.algorithms.QuineMcCluskey.QM.calculate_complexity">
+<tt class="descname">calculate_complexity</tt><big>(</big><em>minterms</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/QuineMcCluskey.html#QM.calculate_complexity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.QuineMcCluskey.QM.calculate_complexity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the complexity of the given function. The complexity is calculated
+based on the following rules:
+A NOT gate adds 1 to the complexity.
+A n-input AND or OR gate adds n to the complexity.</p>
+<p>minterms: a list of minterms that form the function</p>
+<p>returns: an integer that is the complexity of the function</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span> <span class="o">=</span> <span class="n">QM</span><span class="p">([</span><span class="s">&#39;A&#39;</span><span class="p">,</span><span class="s">&#39;B&#39;</span><span class="p">,</span><span class="s">&#39;C&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">calculate_complexity</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">)])</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">calculate_complexity</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">)])</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">calculate_complexity</span><span class="p">([(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)])</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">calculate_complexity</span><span class="p">([(</span><span class="mi">7</span><span class="p">,</span><span class="mi">0</span><span class="p">)])</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">calculate_complexity</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">),(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)])</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">calculate_complexity</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">),(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)])</span>
+<span class="go">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">calculate_complexity</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">),(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)])</span>
+<span class="go">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">calculate_complexity</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">)])</span>
+<span class="go">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">calculate_complexity</span><span class="p">([(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">),(</span><span class="mi">7</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">)])</span>
+<span class="go">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">calculate_complexity</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),(</span><span class="mi">7</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">)])</span>
+<span class="go">11</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">calculate_complexity</span><span class="p">([(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">),(</span><span class="mi">7</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">)])</span>
+<span class="go">11</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">calculate_complexity</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">),(</span><span class="mi">7</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">)])</span>
+<span class="go">12</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">calculate_complexity</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">)])</span>
+<span class="go">15</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qm</span><span class="o">.</span><span class="n">calculate_complexity</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">)])</span>
+<span class="go">17</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="BinPy.algorithms.QuineMcCluskey.QM.compute_primes">
+<tt class="descname">compute_primes</tt><big>(</big><em>cubes</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/QuineMcCluskey.html#QM.compute_primes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.QuineMcCluskey.QM.compute_primes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find all prime implicants of the function.</p>
+<p>cubes: a list of indices for the minterms for which the function evaluates
+to 1 or don&#8217;t-care.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="BinPy.algorithms.QuineMcCluskey.QM.get_function">
+<tt class="descname">get_function</tt><big>(</big><em>minterms</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/QuineMcCluskey.html#QM.get_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.QuineMcCluskey.QM.get_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return in human readable form a sum of products function.</p>
+<p>minterms: a list of minterms that form the function</p>
+<p>returns: a string that represents the function using operators AND, OR and
+NOT.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="BinPy.algorithms.QuineMcCluskey.QM.solve">
+<tt class="descname">solve</tt><big>(</big><em>ones</em>, <em>dont_care=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/QuineMcCluskey.html#QM.solve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.QuineMcCluskey.QM.solve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes the Quine-McCluskey algorithm and returns its results.</p>
+<p>ones: a list of indices for the minterms for which the function evaluates
+to 1
+dc: a list of indices for the minterms for which we do not care about the
+function evaluation</p>
+<p>returns: a tuple a,b; a is the complexity of the result and b is a list of
+minterms which is the minified boolean function expressed as a sum of
+products</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="BinPy.algorithms.QuineMcCluskey.QM.unate_cover">
+<tt class="descname">unate_cover</tt><big>(</big><em>primes</em>, <em>ones</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/QuineMcCluskey.html#QM.unate_cover"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.QuineMcCluskey.QM.unate_cover" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the prime implicants to find the essential prime implicants of the
+function, as well as other prime implicants that are necessary to cover
+the function. This method uses the Petrick&#8217;s method, which is a technique
+for determining all minimum sum-of-products solutions from a prime implicant
+chart.</p>
+<p>primes: the prime implicants that we want to minimize.
+ones: a list of indices for the minterms for which we want the function to
+evaluate to 1.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="BinPy.algorithms.QuineMcCluskey.bitcount">
+<tt class="descclassname">BinPy.algorithms.QuineMcCluskey.</tt><tt class="descname">bitcount</tt><big>(</big><em>i</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/QuineMcCluskey.html#bitcount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.QuineMcCluskey.bitcount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Count set bits of the input.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="BinPy.algorithms.QuineMcCluskey.is_power_of_two_or_zero">
+<tt class="descclassname">BinPy.algorithms.QuineMcCluskey.</tt><tt class="descname">is_power_of_two_or_zero</tt><big>(</big><em>x</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/QuineMcCluskey.html#is_power_of_two_or_zero"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.QuineMcCluskey.is_power_of_two_or_zero" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if an input is zero or a power of two. Alternative, determine if an
+input has at most 1 bit set.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="BinPy.algorithms.QuineMcCluskey.merge">
+<tt class="descclassname">BinPy.algorithms.QuineMcCluskey.</tt><tt class="descname">merge</tt><big>(</big><em>i</em>, <em>j</em><big>)</big><a class="reference internal" href="_modules/BinPy/algorithms/QuineMcCluskey.html#merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.algorithms.QuineMcCluskey.merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combine two minterms.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-BinPy.algorithms">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-BinPy.algorithms" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">BinPy.algorithms package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-BinPy.algorithms.AnalogFormulas">BinPy.algorithms.AnalogFormulas module</a></li>
+<li><a class="reference internal" href="#module-BinPy.algorithms.MooreOptimizer">BinPy.algorithms.MooreOptimizer module</a></li>
+<li><a class="reference internal" href="#module-BinPy.algorithms.QuineMcCluskey">BinPy.algorithms.QuineMcCluskey module</a></li>
+<li><a class="reference internal" href="#module-BinPy.algorithms">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="BinPy.html"
+                        title="previous chapter">BinPy package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="BinPy.binary.html"
+                        title="next chapter">BinPy.binary package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/BinPy.algorithms.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="BinPy.binary.html" title="BinPy.binary package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="BinPy.html" title="BinPy package"
+             >previous</a> |</li>
+        <li><a href="index.html">BinPy 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="BinPy.html" >BinPy package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, BinPy.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>
