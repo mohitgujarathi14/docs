@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>BinPy.binary.logic_gates &mdash; BinPy 1.0.8 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="BinPy 1.0.8 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">BinPy 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for BinPy.binary.logic_gates</h1><div class="highlight"><pre>
+<span class="k">class</span> <span class="nc">Gates</span><span class="p">:</span>
+<div class="viewcode-block" id="Gates"><a class="viewcode-back" href="../../../BinPy.binary.html#BinPy.binary.logic_gates.Gates">[docs]</a>	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	This class gives access to all the basic logic gates</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="k">def</span> <span class="nf">NOT</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
+<div class="viewcode-block" id="Gates.NOT"><a class="viewcode-back" href="../../../BinPy.binary.html#BinPy.binary.logic_gates.Gates.NOT">[docs]</a>		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method takes one input and returns its inverted value</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="k">if</span> <span class="n">a</span><span class="o">==</span><span class="bp">True</span><span class="p">:</span>
+			<span class="k">return</span> <span class="mi">0</span>
+		<span class="k">elif</span> <span class="n">a</span><span class="o">==</span><span class="bp">False</span><span class="p">:</span>
+			<span class="k">return</span> <span class="mi">1</span>
+	
+	<span class="k">def</span> <span class="nf">OR</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">inputs</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Gates.OR"><a class="viewcode-back" href="../../../BinPy.binary.html#BinPy.binary.logic_gates.Gates.OR">[docs]</a>		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method takes n&gt;1 inputs and returns its OR</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;ERROR: Number of inputs must be more than 1&quot;</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="bp">True</span><span class="p">:</span>
+				<span class="k">return</span> <span class="mi">1</span>
+		<span class="k">return</span> <span class="mi">0</span>
+
+	<span class="k">def</span> <span class="nf">NOR</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">inputs</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Gates.NOR"><a class="viewcode-back" href="../../../BinPy.binary.html#BinPy.binary.logic_gates.Gates.NOR">[docs]</a>		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method takes n&gt;1 inputs and returns its NOR</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;ERROR: Number of inputs must be more than 1&quot;</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="bp">True</span><span class="p">:</span>
+				<span class="k">return</span> <span class="mi">0</span>
+		<span class="k">return</span> <span class="mi">1</span>
+		
+	<span class="k">def</span> <span class="nf">AND</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">inputs</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Gates.AND"><a class="viewcode-back" href="../../../BinPy.binary.html#BinPy.binary.logic_gates.Gates.AND">[docs]</a>		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method takes n&gt;1 inputs and returns its AND</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;ERROR: Number of inputs must be more than 1&quot;</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="bp">False</span><span class="p">:</span>
+				<span class="k">return</span> <span class="mi">0</span>
+		<span class="k">return</span> <span class="mi">1</span>
+		
+	<span class="k">def</span> <span class="nf">NAND</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">inputs</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Gates.NAND"><a class="viewcode-back" href="../../../BinPy.binary.html#BinPy.binary.logic_gates.Gates.NAND">[docs]</a>		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method takes n&gt;1 inputs and returns its NAND</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;ERROR: Number of inputs must be more than 1&quot;</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="bp">False</span><span class="p">:</span>
+				<span class="k">return</span> <span class="mi">1</span>
+		<span class="k">return</span> <span class="mi">0</span>
+	
+	<span class="k">def</span> <span class="nf">XOR</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">inputs</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Gates.XOR"><a class="viewcode-back" href="../../../BinPy.binary.html#BinPy.binary.logic_gates.Gates.XOR">[docs]</a>		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method takes n&gt;1 inputs and returns its XOR</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;ERROR: Number of inputs must be more than 1&quot;</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">^</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">last_out</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)):</span>
+				 <span class="n">last_out</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">XOR</span><span class="p">(</span><span class="n">last_out</span><span class="p">,</span><span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+			<span class="k">if</span> <span class="n">last_out</span><span class="o">==</span><span class="bp">True</span><span class="p">:</span>
+				<span class="k">return</span> <span class="mi">1</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">return</span> <span class="mi">0</span>
+					
+	<span class="k">def</span> <span class="nf">XNOR</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">inputs</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Gates.XNOR"><a class="viewcode-back" href="../../../BinPy.binary.html#BinPy.binary.logic_gates.Gates.XNOR">[docs]</a>		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method takes n&gt;1 inputs and returns its XNOR</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;ERROR: Number of inputs must be more than 1&quot;</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">^</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">last_out</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)):</span>
+				 <span class="n">last_out</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">XOR</span><span class="p">(</span><span class="n">last_out</span><span class="p">,</span><span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+			<span class="k">if</span> <span class="n">last_out</span><span class="o">==</span><span class="bp">True</span><span class="p">:</span>
+				<span class="k">return</span> <span class="mi">0</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">return</span> <span class="mi">1</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">BinPy 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, BinPy.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

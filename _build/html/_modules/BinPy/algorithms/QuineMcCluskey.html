@@ -1,0 +1,360 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>BinPy.algorithms.QuineMcCluskey &mdash; BinPy 1.0.8 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="BinPy 1.0.8 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">BinPy 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for BinPy.algorithms.QuineMcCluskey</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This class implements the Quine-McCluskey algorithm for minimization of boolean</span>
+<span class="sd">functions.</span>
+
+<span class="sd">Based on code from Robert Dick &lt;dickrp@eecs.umich.edu&gt; and Pat Maupin</span>
+<span class="sd">&lt;pmaupin@gmail.com&gt;. Most of the original code was re-written for performance</span>
+<span class="sd">reasons.</span>
+
+<span class="sd">&gt;&gt;&gt; qm = QM([&#39;A&#39;,&#39;B&#39;])</span>
+
+<span class="sd">&gt;&gt;&gt; qm.get_function(qm.solve([])[1])</span>
+<span class="sd">&#39;0&#39;</span>
+<span class="sd">&gt;&gt;&gt; qm.get_function(qm.solve([1,3],[0,2])[1])</span>
+<span class="sd">&#39;1&#39;</span>
+<span class="sd">&gt;&gt;&gt; qm.get_function(qm.solve([0,1,2,3])[1])</span>
+<span class="sd">&#39;1&#39;</span>
+<span class="sd">&gt;&gt;&gt; qm.get_function(qm.solve([3])[1])</span>
+<span class="sd">&#39;(A AND B)&#39;</span>
+<span class="sd">&gt;&gt;&gt; qm.get_function(qm.solve([0])[1])</span>
+<span class="sd">&#39;((NOT A) AND (NOT B))&#39;</span>
+<span class="sd">&gt;&gt;&gt; qm.get_function(qm.solve([1,3])[1])</span>
+<span class="sd">&#39;A&#39;ls</span>
+
+<span class="sd">&gt;&gt;&gt; qm.get_function(qm.solve([1],[3])[1])</span>
+<span class="sd">&#39;A&#39;</span>
+<span class="sd">&gt;&gt;&gt; qm.get_function(qm.solve([2,3])[1])</span>
+<span class="sd">&#39;B&#39;</span>
+<span class="sd">&gt;&gt;&gt; qm.get_function(qm.solve([0,2])[1])</span>
+<span class="sd">&#39;(NOT A)&#39;</span>
+<span class="sd">&gt;&gt;&gt; qm.get_function(qm.solve([0,1])[1])</span>
+<span class="sd">&#39;(NOT B)&#39;</span>
+<span class="sd">&gt;&gt;&gt; qm.get_function(qm.solve([1,2,3])[1])</span>
+<span class="sd">&#39;(A OR B)&#39;</span>
+<span class="sd">&gt;&gt;&gt; qm.get_function(qm.solve([0,1,2])[1])</span>
+<span class="sd">&#39;((NOT B) OR (NOT A))&#39;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="QM"><a class="viewcode-back" href="../../../BinPy.algorithms.html#BinPy.algorithms.QuineMcCluskey.QM">[docs]</a><span class="k">class</span> <span class="nc">QM</span><span class="p">:</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variables</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Initialize the Quine-McCluskey solver.</span>
+
+<span class="sd">variables: a list of strings that are the names of the variables used in</span>
+<span class="sd">the boolean functions</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="n">variables</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">numvars</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">variables</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QM.solve"><a class="viewcode-back" href="../../../BinPy.algorithms.html#BinPy.algorithms.QuineMcCluskey.QM.solve">[docs]</a>  <span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ones</span><span class="p">,</span> <span class="n">dont_care</span> <span class="o">=</span> <span class="p">[]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Executes the Quine-McCluskey algorithm and returns its results.</span>
+
+<span class="sd">ones: a list of indices for the minterms for which the function evaluates</span>
+<span class="sd">to 1</span>
+<span class="sd">dc: a list of indices for the minterms for which we do not care about the</span>
+<span class="sd">function evaluation</span>
+
+<span class="sd">returns: a tuple a,b; a is the complexity of the result and b is a list of</span>
+<span class="sd">minterms which is the minified boolean function expressed as a sum of</span>
+<span class="sd">products</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="c"># Handle special case for functions that always evaluate to True or False.</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ones</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">return</span> <span class="mi">0</span><span class="p">,</span><span class="s">&#39;0&#39;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ones</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">dont_care</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="o">&lt;&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">numvars</span><span class="p">:</span>
+      <span class="k">return</span> <span class="mi">0</span><span class="p">,</span><span class="s">&#39;1&#39;</span>
+
+    <span class="n">primes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_primes</span><span class="p">(</span><span class="n">ones</span> <span class="o">+</span> <span class="n">dont_care</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">unate_cover</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">primes</span><span class="p">),</span> <span class="n">ones</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="QM.compute_primes"><a class="viewcode-back" href="../../../BinPy.algorithms.html#BinPy.algorithms.QuineMcCluskey.QM.compute_primes">[docs]</a>  <span class="k">def</span> <span class="nf">compute_primes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cubes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Find all prime implicants of the function.</span>
+
+<span class="sd">cubes: a list of indices for the minterms for which the function evaluates</span>
+<span class="sd">to 1 or don&#39;t-care.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="n">sigma</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numvars</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+      <span class="n">sigma</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">set</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cubes</span><span class="p">:</span>
+      <span class="n">sigma</span><span class="p">[</span><span class="n">bitcount</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+
+    <span class="n">primes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">sigma</span><span class="p">:</span>
+      <span class="n">nsigma</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="n">redundant</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+      <span class="k">for</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sigma</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">sigma</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="n">nc</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">c1</span><span class="p">:</span>
+          <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">c2</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">merge</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">m</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+              <span class="n">nc</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+              <span class="n">redundant</span> <span class="o">|=</span> <span class="nb">set</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+        <span class="n">nsigma</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nc</span><span class="p">)</span>
+      <span class="n">primes</span> <span class="o">|=</span> <span class="nb">set</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">cubes</span> <span class="ow">in</span> <span class="n">sigma</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cubes</span><span class="p">)</span> <span class="o">-</span> <span class="n">redundant</span>
+      <span class="n">sigma</span> <span class="o">=</span> <span class="n">nsigma</span>
+    <span class="k">return</span> <span class="n">primes</span>
+</div>
+<div class="viewcode-block" id="QM.unate_cover"><a class="viewcode-back" href="../../../BinPy.algorithms.html#BinPy.algorithms.QuineMcCluskey.QM.unate_cover">[docs]</a>  <span class="k">def</span> <span class="nf">unate_cover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primes</span><span class="p">,</span> <span class="n">ones</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Use the prime implicants to find the essential prime implicants of the</span>
+<span class="sd">function, as well as other prime implicants that are necessary to cover</span>
+<span class="sd">the function. This method uses the Petrick&#39;s method, which is a technique</span>
+<span class="sd">for determining all minimum sum-of-products solutions from a prime implicant</span>
+<span class="sd">chart.</span>
+
+<span class="sd">primes: the prime implicants that we want to minimize.</span>
+<span class="sd">ones: a list of indices for the minterms for which we want the function to</span>
+<span class="sd">evaluate to 1.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="n">chart</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">one</span> <span class="ow">in</span> <span class="n">ones</span><span class="p">:</span>
+      <span class="n">column</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">primes</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">one</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">~</span><span class="n">primes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span> <span class="o">==</span> <span class="n">primes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+          <span class="n">column</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+      <span class="n">chart</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
+
+    <span class="n">covers</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">chart</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">covers</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">([</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chart</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">chart</span><span class="p">)):</span>
+      <span class="n">new_covers</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="k">for</span> <span class="n">cover</span> <span class="ow">in</span> <span class="n">covers</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">prime_index</span> <span class="ow">in</span> <span class="n">chart</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+          <span class="n">x</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">cover</span><span class="p">)</span>
+          <span class="n">x</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">prime_index</span><span class="p">)</span>
+          <span class="n">append</span> <span class="o">=</span> <span class="bp">True</span>
+          <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_covers</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">new_covers</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+              <span class="k">del</span> <span class="n">new_covers</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">new_covers</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+              <span class="n">append</span> <span class="o">=</span> <span class="bp">False</span>
+          <span class="k">if</span> <span class="n">append</span><span class="p">:</span>
+            <span class="n">new_covers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+      <span class="n">covers</span> <span class="o">=</span> <span class="n">new_covers</span>
+
+    <span class="n">min_complexity</span> <span class="o">=</span> <span class="mi">99999999</span>
+    <span class="k">for</span> <span class="n">cover</span> <span class="ow">in</span> <span class="n">covers</span><span class="p">:</span>
+      <span class="n">primes_in_cover</span> <span class="o">=</span> <span class="p">[</span><span class="n">primes</span><span class="p">[</span><span class="n">prime_index</span><span class="p">]</span> <span class="k">for</span> <span class="n">prime_index</span> <span class="ow">in</span> <span class="n">cover</span><span class="p">]</span>
+      <span class="n">complexity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_complexity</span><span class="p">(</span><span class="n">primes_in_cover</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">complexity</span> <span class="o">&lt;</span> <span class="n">min_complexity</span><span class="p">:</span>
+        <span class="n">min_complexity</span> <span class="o">=</span> <span class="n">complexity</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">primes_in_cover</span>
+
+    <span class="k">return</span> <span class="n">min_complexity</span><span class="p">,</span><span class="n">result</span>
+</div>
+<div class="viewcode-block" id="QM.calculate_complexity"><a class="viewcode-back" href="../../../BinPy.algorithms.html#BinPy.algorithms.QuineMcCluskey.QM.calculate_complexity">[docs]</a>  <span class="k">def</span> <span class="nf">calculate_complexity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minterms</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Calculate the complexity of the given function. The complexity is calculated</span>
+<span class="sd">based on the following rules:</span>
+<span class="sd">A NOT gate adds 1 to the complexity.</span>
+<span class="sd">A n-input AND or OR gate adds n to the complexity.</span>
+
+<span class="sd">minterms: a list of minterms that form the function</span>
+
+<span class="sd">returns: an integer that is the complexity of the function</span>
+
+<span class="sd">&gt;&gt;&gt; qm = QM([&#39;A&#39;,&#39;B&#39;,&#39;C&#39;])</span>
+
+<span class="sd">&gt;&gt;&gt; qm.calculate_complexity([(1,6)])</span>
+<span class="sd">0</span>
+<span class="sd">&gt;&gt;&gt; qm.calculate_complexity([(0,6)])</span>
+<span class="sd">1</span>
+<span class="sd">&gt;&gt;&gt; qm.calculate_complexity([(3,4)])</span>
+<span class="sd">2</span>
+<span class="sd">&gt;&gt;&gt; qm.calculate_complexity([(7,0)])</span>
+<span class="sd">3</span>
+<span class="sd">&gt;&gt;&gt; qm.calculate_complexity([(1,6),(2,5),(4,3)])</span>
+<span class="sd">3</span>
+<span class="sd">&gt;&gt;&gt; qm.calculate_complexity([(0,6),(2,5),(4,3)])</span>
+<span class="sd">4</span>
+<span class="sd">&gt;&gt;&gt; qm.calculate_complexity([(0,6),(0,5),(4,3)])</span>
+<span class="sd">5</span>
+<span class="sd">&gt;&gt;&gt; qm.calculate_complexity([(0,6),(0,5),(0,3)])</span>
+<span class="sd">6</span>
+<span class="sd">&gt;&gt;&gt; qm.calculate_complexity([(3,4),(7,0),(5,2)])</span>
+<span class="sd">10</span>
+<span class="sd">&gt;&gt;&gt; qm.calculate_complexity([(1,4),(7,0),(5,2)])</span>
+<span class="sd">11</span>
+<span class="sd">&gt;&gt;&gt; qm.calculate_complexity([(2,4),(7,0),(5,2)])</span>
+<span class="sd">11</span>
+<span class="sd">&gt;&gt;&gt; qm.calculate_complexity([(0,4),(7,0),(5,2)])</span>
+<span class="sd">12</span>
+<span class="sd">&gt;&gt;&gt; qm.calculate_complexity([(0,4),(0,0),(5,2)])</span>
+<span class="sd">15</span>
+<span class="sd">&gt;&gt;&gt; qm.calculate_complexity([(0,4),(0,0),(0,2)])</span>
+<span class="sd">17</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="n">complexity</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">minterms</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">complexity</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="n">complexity</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">numvars</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+    <span class="k">for</span> <span class="n">minterm</span> <span class="ow">in</span> <span class="n">minterms</span><span class="p">:</span>
+      <span class="n">masked</span> <span class="o">=</span> <span class="o">~</span><span class="n">minterm</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">mask</span>
+      <span class="n">term_complexity</span> <span class="o">=</span> <span class="n">bitcount</span><span class="p">(</span><span class="n">masked</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">term_complexity</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">term_complexity</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="n">complexity</span> <span class="o">+=</span> <span class="n">term_complexity</span>
+      <span class="n">complexity</span> <span class="o">+=</span> <span class="n">bitcount</span><span class="p">(</span><span class="o">~</span><span class="n">minterm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">masked</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">complexity</span>
+</div>
+<div class="viewcode-block" id="QM.get_function"><a class="viewcode-back" href="../../../BinPy.algorithms.html#BinPy.algorithms.QuineMcCluskey.QM.get_function">[docs]</a>  <span class="k">def</span> <span class="nf">get_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minterms</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Return in human readable form a sum of products function.</span>
+
+<span class="sd">minterms: a list of minterms that form the function</span>
+
+<span class="sd">returns: a string that represents the function using operators AND, OR and</span>
+<span class="sd">NOT.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">minterms</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">minterms</span>
+
+    <span class="k">def</span> <span class="nf">parentheses</span><span class="p">(</span><span class="n">glue</span><span class="p">,</span> <span class="n">array</span><span class="p">):</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&#39;(&#39;</span><span class="p">,</span><span class="n">glue</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">array</span><span class="p">),</span><span class="s">&#39;)&#39;</span><span class="p">])</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">glue</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+
+    <span class="n">or_terms</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">minterm</span> <span class="ow">in</span> <span class="n">minterms</span><span class="p">:</span>
+      <span class="n">and_terms</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">minterm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">j</span><span class="p">:</span>
+          <span class="n">and_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">minterm</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">j</span><span class="p">:</span>
+          <span class="n">and_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;(NOT </span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+      <span class="n">or_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parentheses</span><span class="p">(</span><span class="s">&#39; AND &#39;</span><span class="p">,</span> <span class="n">and_terms</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">parentheses</span><span class="p">(</span><span class="s">&#39; OR &#39;</span><span class="p">,</span> <span class="n">or_terms</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="bitcount"><a class="viewcode-back" href="../../../BinPy.algorithms.html#BinPy.algorithms.QuineMcCluskey.bitcount">[docs]</a><span class="k">def</span> <span class="nf">bitcount</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot; Count set bits of the input. &quot;&quot;&quot;</span>
+
+  <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">+=</span> <span class="n">i</span><span class="o">&amp;</span><span class="mi">1</span>
+    <span class="n">i</span><span class="o">&gt;&gt;=</span><span class="mi">1</span>
+  <span class="k">return</span> <span class="n">res</span>
+</div>
+<div class="viewcode-block" id="is_power_of_two_or_zero"><a class="viewcode-back" href="../../../BinPy.algorithms.html#BinPy.algorithms.QuineMcCluskey.is_power_of_two_or_zero">[docs]</a><span class="k">def</span> <span class="nf">is_power_of_two_or_zero</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Determine if an input is zero or a power of two. Alternative, determine if an</span>
+<span class="sd">input has at most 1 bit set.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+  <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">~</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">==</span> <span class="n">x</span>
+</div>
+<div class="viewcode-block" id="merge"><a class="viewcode-back" href="../../../BinPy.algorithms.html#BinPy.algorithms.QuineMcCluskey.merge">[docs]</a><span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot; Combine two minterms. &quot;&quot;&quot;</span>
+
+  <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">j</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="bp">None</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^</span> <span class="n">j</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">is_power_of_two_or_zero</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">None</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">j</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">|</span><span class="n">y</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">BinPy 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, BinPy.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>
