@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>BinPy.base &mdash; Binpy Dev documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'Dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Binpy Dev documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../../index.html">
+          <span>Binpy Dev documentation</span></a></h1>
+        <h2 class="heading"><span>BinPy.base</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Source code for BinPy.base</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">consoleHandler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+<span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%(levelname)s</span><span class="s">: </span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="n">consoleHandler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;Main Logger&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">consoleHandler</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="init_logging"><a class="viewcode-back" href="../../BinPy.html#BinPy.base.init_logging">[docs]</a><span class="k">def</span> <span class="nf">init_logging</span><span class="p">(</span><span class="n">log_level</span><span class="p">):</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">log_level</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="read_logging_level"><a class="viewcode-back" href="../../BinPy.html#BinPy.base.read_logging_level">[docs]</a><span class="k">def</span> <span class="nf">read_logging_level</span><span class="p">(</span><span class="n">log_level</span><span class="p">):</span>
+    <span class="n">levels_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="mi">1</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="s">&quot;debug&quot;</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+        <span class="mi">2</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="s">&quot;info&quot;</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+        <span class="mi">3</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span> <span class="s">&quot;warning&quot;</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span>
+        <span class="mi">4</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="s">&quot;error&quot;</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+        <span class="mi">5</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">,</span> <span class="s">&quot;critical&quot;</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">log_level</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+        <span class="n">log_level</span> <span class="o">=</span> <span class="n">log_level</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">log_level</span> <span class="ow">in</span> <span class="n">levels_dict</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">levels_dict</span><span class="p">[</span><span class="n">log_level</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;The logging level given is not valid&quot;</span>
+        <span class="k">return</span> <span class="bp">None</span>
+</div>
+<div class="viewcode-block" id="get_logging_level"><a class="viewcode-back" href="../../BinPy.html#BinPy.base.get_logging_level">[docs]</a><span class="k">def</span> <span class="nf">get_logging_level</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function prints the current logging level of the main logger.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">levels_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="mi">10</span><span class="p">:</span> <span class="s">&quot;DEBUG&quot;</span><span class="p">,</span>
+        <span class="mi">20</span><span class="p">:</span> <span class="s">&quot;INFO&quot;</span><span class="p">,</span>
+        <span class="mi">30</span><span class="p">:</span> <span class="s">&quot;WARNING&quot;</span><span class="p">,</span>
+        <span class="mi">40</span><span class="p">:</span> <span class="s">&quot;ERROR&quot;</span><span class="p">,</span>
+        <span class="mi">50</span><span class="p">:</span> <span class="s">&quot;CRITICAL&quot;</span>
+    <span class="p">}</span>
+
+    <span class="k">print</span> <span class="s">&quot;The current logging level is:&quot;</span><span class="p">,</span> <span class="n">levels_dict</span><span class="p">[</span><span class="n">logger</span><span class="o">.</span><span class="n">getEffectiveLevel</span><span class="p">()]</span>
+</div>
+<div class="viewcode-block" id="set_logging"><a class="viewcode-back" href="../../BinPy.html#BinPy.base.set_logging">[docs]</a><span class="k">def</span> <span class="nf">set_logging</span><span class="p">(</span><span class="n">log_level</span><span class="p">,</span><span class="n">myfilename</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function sets the threshold for the logging system and, if desired,</span>
+<span class="sd">    directs the messages to a logfile. Level options:</span>
+
+<span class="sd">    &#39;DEBUG&#39; or 1</span>
+<span class="sd">    &#39;INFO&#39; or 2</span>
+<span class="sd">    &#39;WARNING&#39; or 3</span>
+<span class="sd">    &#39;ERROR&#39; or 4</span>
+<span class="sd">    &#39;CRITICAL&#39; or 5</span>
+
+<span class="sd">    If the user is on the interactive shell and wants to log to file, a custom</span>
+<span class="sd">    excepthook is set. By default, if logging to file is not enabled, the way</span>
+<span class="sd">    errors are displayed on the interactive shell is not changed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">myfilename</span> <span class="ow">and</span> <span class="n">ipython_version</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ipython_version</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;0.10&quot;</span><span class="p">):</span>
+                <span class="n">__IPYTHON__</span><span class="o">.</span><span class="n">set_custom_exc</span><span class="p">((</span><span class="ne">Exception</span><span class="p">,),</span> <span class="n">ipython_exception_handler</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ip</span> <span class="o">=</span> <span class="n">get_ipython</span><span class="p">()</span>
+                <span class="n">ip</span><span class="o">.</span><span class="n">set_custom_exc</span><span class="p">((</span><span class="ne">Exception</span><span class="p">,),</span> <span class="n">ipython_exception_handler</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span> <span class="c">#In case the interactive shell is not being used</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exc_clear</span><span class="p">()</span>
+
+
+    <span class="n">level</span> <span class="o">=</span> <span class="n">read_logging_level</span><span class="p">(</span><span class="n">log_level</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">level</span> <span class="ow">and</span> <span class="n">myfilename</span><span class="p">:</span>
+        <span class="n">fileHandler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">myfilename</span><span class="p">)</span>
+        <span class="n">fileHandler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+        <span class="n">fileHandler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">fileHandler</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">removeHandler</span><span class="p">(</span><span class="n">consoleHandler</span><span class="p">)</span> <span class="c">#Console logging is disabled.</span>
+        <span class="k">print</span> <span class="s">&quot;Now logging to&quot;</span><span class="p">,</span><span class="n">myfilename</span><span class="p">,</span><span class="s">&quot;with level&quot;</span><span class="p">,</span><span class="n">log_level</span>
+    <span class="k">elif</span> <span class="n">level</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;Now logging with level&quot;</span><span class="p">,</span><span class="n">log_level</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span></div>
+</pre></div>
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Binpy Developers.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

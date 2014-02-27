@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>BinPy.Operations.operations &mdash; Binpy Dev documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     'Dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Binpy Dev documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../../../index.html">
+          <span>Binpy Dev documentation</span></a></h1>
+        <h2 class="heading"><span>BinPy.Operations.operations</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Source code for BinPy.Operations.operations</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="Operations"><a class="viewcode-back" href="../../../BinPy.Operations.html#BinPy.Operations.operations.Operations">[docs]</a><span class="k">class</span> <span class="nc">Operations</span><span class="p">:</span>
+
+	<span class="k">def</span> <span class="nf">__parseInput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">input1</span><span class="p">,</span><span class="n">input2</span><span class="p">):</span>
+
+		<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input1</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
+			<span class="n">input1</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">input1</span><span class="p">))</span>
+		<span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input1</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+			<span class="n">input1</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">input1</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input2</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
+			<span class="n">input2</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">input2</span><span class="p">))</span>
+		<span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input2</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+			<span class="n">input2</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">input2</span><span class="p">)</span>
+
+		<span class="k">return</span> <span class="n">input1</span><span class="p">,</span><span class="n">input2</span>
+
+<div class="viewcode-block" id="Operations.ADD"><a class="viewcode-back" href="../../../BinPy.Operations.html#BinPy.Operations.operations.Operations.ADD">[docs]</a>	<span class="k">def</span> <span class="nf">ADD</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">input1</span><span class="p">,</span><span class="n">input2</span><span class="p">):</span>
+
+		<span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parseInput</span><span class="p">(</span><span class="n">input1</span><span class="p">,</span><span class="n">input2</span><span class="p">)</span>
+		<span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="mi">2</span><span class="p">))[</span><span class="mi">2</span><span class="p">:]</span>
+</div>
+<div class="viewcode-block" id="Operations.SUB"><a class="viewcode-back" href="../../../BinPy.Operations.html#BinPy.Operations.operations.Operations.SUB">[docs]</a>	<span class="k">def</span> <span class="nf">SUB</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">input1</span><span class="p">,</span><span class="n">input2</span><span class="p">):</span>
+
+		<span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parseInput</span><span class="p">(</span><span class="n">input1</span><span class="p">,</span><span class="n">input2</span><span class="p">)</span>
+		<span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="mi">2</span><span class="p">))[</span><span class="mi">2</span><span class="p">:]</span>
+</div>
+<div class="viewcode-block" id="Operations.MUL"><a class="viewcode-back" href="../../../BinPy.Operations.html#BinPy.Operations.operations.Operations.MUL">[docs]</a>	<span class="k">def</span> <span class="nf">MUL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">input1</span><span class="p">,</span><span class="n">input2</span><span class="p">):</span>
+
+		<span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parseInput</span><span class="p">(</span><span class="n">input1</span><span class="p">,</span><span class="n">input2</span><span class="p">)</span>
+		<span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="mi">2</span><span class="p">))[</span><span class="mi">2</span><span class="p">:]</span>		
+	</div>
+<div class="viewcode-block" id="Operations.DIV"><a class="viewcode-back" href="../../../BinPy.Operations.html#BinPy.Operations.operations.Operations.DIV">[docs]</a>	<span class="k">def</span> <span class="nf">DIV</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">input1</span><span class="p">,</span><span class="n">input2</span><span class="p">):</span>
+
+		<span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parseInput</span><span class="p">(</span><span class="n">input1</span><span class="p">,</span><span class="n">input2</span><span class="p">)</span>
+		<span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="mi">2</span><span class="p">))[</span><span class="mi">2</span><span class="p">:]</span>	
+</div>
+<div class="viewcode-block" id="Operations.COMP"><a class="viewcode-back" href="../../../BinPy.Operations.html#BinPy.Operations.operations.Operations.COMP">[docs]</a>	<span class="k">def</span> <span class="nf">COMP</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">input1</span><span class="p">,</span><span class="n">option</span><span class="p">):</span>
+
+		<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input1</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
+			<span class="n">input1</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">input1</span><span class="p">))</span>
+		<span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input1</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+			<span class="n">input1</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">input1</span><span class="p">)</span>
+
+		<span class="n">result</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">input1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">^</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">input1</span><span class="p">)</span><span class="o">*</span><span class="s">&#39;1&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">))[</span><span class="mi">2</span><span class="p">:]</span>
+		<span class="n">temp</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">))[</span><span class="mi">2</span><span class="p">:]</span>
+		<span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">option</span><span class="p">)</span> <span class="o">==</span> <span class="s">&#39;1&#39;</span><span class="p">:</span>
+			<span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">input1</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">))</span> <span class="o">*</span> <span class="s">&#39;0&#39;</span> <span class="o">+</span> <span class="n">result</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">input1</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">temp</span><span class="p">))</span> <span class="o">*</span> <span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">temp</span>
+</pre></div></div></div>
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Binpy Developers.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

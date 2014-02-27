@@ -1,0 +1,382 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>BinPy.Algorithms.MooreOptimizer &mdash; Binpy Dev documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     'Dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Binpy Dev documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../../../index.html">
+          <span>Binpy Dev documentation</span></a></h1>
+        <h2 class="heading"><span>BinPy.Algorithms.MooreOptimizer</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Source code for BinPy.Algorithms.MooreOptimizer</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">QuineMcCluskey</span> <span class="kn">import</span> <span class="n">QM</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This class implements a Moore state machine solver. Using the Quine-McCluskey</span>
+<span class="sd">algorithm it minimizes the necessary next state and output functions for a given</span>
+<span class="sd">state machine.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">class</span> <span class="nc">StateMachineSolver</span><span class="p">:</span>
+<div class="viewcode-block" id="StateMachineSolver"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.StateMachineSolver">[docs]</a>  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_tran</span><span class="p">,</span> <span class="n">state_word_len</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Initialize the Moore state machine optimizer.</span>
+
+<span class="sd">state_tran: a dictionary; key denotes the target state and value is a lambda</span>
+<span class="sd">expression that evaluates to True when the machine should move to this</span>
+<span class="sd">target state.</span>
+<span class="sd">state_word_len: an integer that holds the count of bits used for</span>
+<span class="sd">representing the state</span>
+<span class="sd">variables: a list containing the names of the input variables of the machine</span>
+<span class="sd">outputs: a list containing lambda expressions for calculating the outputs of</span>
+<span class="sd">the state machine</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">state_tran</span> <span class="o">=</span> <span class="n">state_tran</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">state_word_len</span> <span class="o">=</span> <span class="n">state_word_len</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="n">outputs</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">next_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">InternalOptimizer</span><span class="p">(</span><span class="n">state_word_len</span><span class="p">,</span> <span class="n">variables</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">InternalOptimizer</span><span class="p">(</span><span class="n">state_word_len</span><span class="p">,</span> <span class="p">[])</span>
+
+  <span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_map</span><span class="p">):</span>
+<div class="viewcode-block" id="StateMachineSolver.solve"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.StateMachineSolver.solve">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Given a state map return the transition and output functions.</span>
+
+<span class="sd">state_map: a dictionary; key is the state and value is the value of the</span>
+<span class="sd">state word that identifies this state</span>
+
+<span class="sd">returns: a tuple a,b,c; a is the sum of the functions&#39; complexities, b is</span>
+<span class="sd">the next state functions (one for each state word bit) and c is the output</span>
+<span class="sd">functions</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">next_state</span><span class="o">.</span><span class="n">state_map</span> <span class="o">=</span> <span class="n">state_map</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">state_map</span> <span class="o">=</span> <span class="n">state_map</span>
+
+    <span class="n">state_bit_on</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">state_bit_off</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state_word_len</span><span class="p">):</span>
+      <span class="n">state_bit_on</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="n">state_bit_off</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">state_map</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">):</span>
+          <span class="n">state_bit_on</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">state_bit_off</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+    <span class="n">total_complexity</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">next_state_results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">output_results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state_word_len</span><span class="p">):</span>
+      <span class="n">f_on</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_tran</span><span class="p">[</span><span class="n">x</span><span class="p">],</span><span class="n">state_bit_on</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+      <span class="n">f_off</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_tran</span><span class="p">[</span><span class="n">x</span><span class="p">],</span><span class="n">state_bit_off</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+      <span class="n">complexity</span><span class="p">,</span><span class="n">function</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_state</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">f_on</span><span class="p">,</span> <span class="n">f_off</span><span class="p">)</span>
+      <span class="n">total_complexity</span> <span class="o">+=</span> <span class="n">complexity</span>
+      <span class="n">next_state_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">)):</span>
+      <span class="n">complexity</span><span class="p">,</span><span class="n">function</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">solve</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+      <span class="n">total_complexity</span> <span class="o">+=</span> <span class="n">complexity</span>
+      <span class="n">output_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">total_complexity</span><span class="p">,</span><span class="n">next_state_results</span><span class="p">,</span><span class="n">output_results</span>
+
+  <span class="k">def</span> <span class="nf">print_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">state_map</span><span class="p">,</span><span class="n">solution</span><span class="p">):</span></div>
+<div class="viewcode-block" id="StateMachineSolver.print_solution"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.StateMachineSolver.print_solution">[docs]</a>    <span class="sd">&quot;&quot;&quot; Print a solution. &quot;&quot;&quot;</span>
+
+    <span class="n">complexity</span><span class="p">,</span><span class="n">next_state_funcs</span><span class="p">,</span><span class="n">output_funcs</span> <span class="o">=</span> <span class="n">solution</span>
+
+    <span class="k">print</span> <span class="s">&#39;Complexity = </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">complexity</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">state_map</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+      <span class="k">print</span> <span class="s">&#39;State </span><span class="si">%d</span><span class="s"> = </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">state_map</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">next_state_funcs</span><span class="p">)):</span>
+      <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_state</span><span class="o">.</span><span class="n">get_function</span><span class="p">(</span><span class="n">next_state_funcs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+      <span class="k">print</span> <span class="s">&#39;S</span><span class="si">%d</span><span class="s"> = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">output_funcs</span><span class="p">)):</span>
+      <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">get_function</span><span class="p">(</span><span class="n">output_funcs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+      <span class="k">print</span> <span class="s">&#39;OUT</span><span class="si">%d</span><span class="s"> = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span>
+
+  <span class="sd">&quot;&quot;&quot; This class is used internally by the Moore state machine optimizer. &quot;&quot;&quot;</span></div>
+
+  <span class="k">class</span> <span class="nc">InternalOptimizer</span><span class="p">:</span>
+<div class="viewcode-block" id="StateMachineSolver.InternalOptimizer"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_word_len</span><span class="p">,</span> <span class="n">variables</span><span class="p">):</span>
+      <span class="sd">&quot;&quot;&quot; Initialize the internal helper class. &quot;&quot;&quot;</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">state_word_len</span> <span class="o">=</span> <span class="n">state_word_len</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="n">variables</span>
+      <span class="n">variable_names</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span><span class="s">&#39;S</span><span class="si">%d</span><span class="s">&#39;</span><span class="o">%</span><span class="n">i</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state_word_len</span><span class="p">))</span>
+      <span class="n">variable_names</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">qm</span> <span class="o">=</span> <span class="n">QM</span><span class="p">(</span><span class="n">variable_names</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_on</span><span class="p">,</span> <span class="n">f_off</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="StateMachineSolver.InternalOptimizer.solve"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer.solve">[docs]</a>      <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Returns a function that satisfies the conditions given.</span>
+
+<span class="sd">f_on: a list of lambda expressions; if one of the lambda expressions</span>
+<span class="sd">evaluates to True then the requested function should evaluate to True</span>
+<span class="sd">f_off: a list of lambda expressions; if one of them evaluates to True</span>
+<span class="sd">then the requested function whould evaluate to False</span>
+
+<span class="sd">returns: a tuple a,b; a is the complexity of the function and b is the</span>
+<span class="sd">function</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">state_env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">State</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">variables_env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Variables</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+
+      <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_word_len</span>
+      <span class="n">d</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+      <span class="n">ones</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="n">dc</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="n">c</span><span class="p">)))</span>
+      <span class="k">for</span> <span class="n">variables_word</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">d</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variables_env</span><span class="o">.</span><span class="n">word</span> <span class="o">=</span> <span class="n">variables_word</span>
+        <span class="k">for</span> <span class="n">state</span><span class="p">,</span><span class="n">state_word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_map</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">state_env</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">state</span>
+          <span class="n">on</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">f_on</span><span class="p">)</span>
+          <span class="k">if</span> <span class="n">f_off</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">off</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">on</span>
+          <span class="k">else</span><span class="p">:</span>
+            <span class="n">off</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">f_off</span><span class="p">)</span>
+          <span class="k">assert</span> <span class="ow">not</span> <span class="p">(</span><span class="n">on</span> <span class="ow">and</span> <span class="n">off</span><span class="p">)</span>
+          <span class="k">if</span> <span class="n">on</span><span class="p">:</span>
+            <span class="n">ones</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">variables_word</span><span class="o">&lt;&lt;</span><span class="n">c</span><span class="o">|</span><span class="n">state_word</span><span class="p">)</span>
+            <span class="n">dc</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">variables_word</span><span class="o">&lt;&lt;</span><span class="n">c</span><span class="o">|</span><span class="n">state_word</span><span class="p">)</span>
+          <span class="k">elif</span> <span class="n">off</span><span class="p">:</span>
+            <span class="n">dc</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">variables_word</span><span class="o">&lt;&lt;</span><span class="n">c</span><span class="o">|</span><span class="n">state_word</span><span class="p">)</span>
+
+      <span class="n">dc</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">dc</span><span class="p">)</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">qm</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">ones</span><span class="p">,</span><span class="n">dc</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_array</span><span class="p">):</span></div>
+<div class="viewcode-block" id="StateMachineSolver.InternalOptimizer.evaluate"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer.evaluate">[docs]</a>      <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Evaluates a list of lambda expressions in the state and variables</span>
+<span class="sd">environment. The lambda expressions are terms of an OR expression.</span>
+
+<span class="sd">f_array: a list of lambda expressions</span>
+
+<span class="sd">returns: the logical OR after evaluate the lambda expression in the setup</span>
+<span class="sd">environment</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+      <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">f_array</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">f</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state_env</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">variables_env</span><span class="p">):</span>
+          <span class="k">return</span> <span class="bp">True</span>
+      <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="sd">&quot;&quot;&quot;</span></div>
+<span class="sd">This class provides access to the state word from the lambda expressions.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">State</span><span class="p">:</span>
+<div class="viewcode-block" id="StateMachineSolver.InternalOptimizer.State"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer.State">[docs]</a>      <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">item</span>
+
+    <span class="sd">&quot;&quot;&quot;</span></div>
+<span class="sd">This class provides access to the input variables from the lambda</span>
+<span class="sd">expressions.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">Variables</span><span class="p">:</span>
+<div class="viewcode-block" id="StateMachineSolver.InternalOptimizer.Variables"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer.Variables">[docs]</a>      <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variables</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">variables</span><span class="p">)):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="n">variables</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">i</span>
+
+      <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">word</span> <span class="o">&amp;</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="n">item</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">get_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minterms</span><span class="p">):</span></div>
+<div class="viewcode-block" id="StateMachineSolver.InternalOptimizer.get_function"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.StateMachineSolver.InternalOptimizer.get_function">[docs]</a>      <span class="sd">&quot;&quot;&quot; Retrieve a human readable form of the given function. &quot;&quot;&quot;</span>
+
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">qm</span><span class="o">.</span><span class="n">get_function</span><span class="p">(</span><span class="n">minterms</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot; This class is the base for creating a Moore state machine optimizer. &quot;&quot;&quot;</span></div></div></div>
+
+<span class="k">class</span> <span class="nc">StateMachineOptimizer</span><span class="p">:</span>
+<div class="viewcode-block" id="StateMachineOptimizer"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.StateMachineOptimizer">[docs]</a>  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_tran</span><span class="p">,</span> <span class="n">state_word_len</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Initialize the state machine optimizer. &quot;&quot;&quot;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">state_tran</span> <span class="o">=</span> <span class="n">state_tran</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">state_word_len</span> <span class="o">=</span> <span class="n">state_word_len</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sms</span> <span class="o">=</span> <span class="n">StateMachineSolver</span><span class="p">(</span><span class="n">state_tran</span><span class="p">,</span> <span class="n">state_word_len</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span>
+      <span class="n">outputs</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">print_all</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;print_all&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">print_best</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;print_best&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">calc_total</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="StateMachineOptimizer.calc_total"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.StateMachineOptimizer.calc_total">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Calculate the total count of possible permutations of state configurations.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">begin</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">state_word_len</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state_tran</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">state_word_len</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span><span class="n">end</span><span class="p">):</span>
+      <span class="n">total</span> <span class="o">*=</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="n">total</span>
+
+<span class="sd">&quot;&quot;&quot;</span></div></div>
+<span class="sd">This class implements a Moore state machine optimizer that tries all possible</span>
+<span class="sd">permutations for assignment of state word values to states.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">class</span> <span class="nc">StateMachineOptimizer_AllPermutations</span><span class="p">(</span><span class="n">StateMachineOptimizer</span><span class="p">):</span>
+<div class="viewcode-block" id="StateMachineOptimizer_AllPermutations"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.StateMachineOptimizer_AllPermutations">[docs]</a>  <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="StateMachineOptimizer_AllPermutations.optimize"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.StateMachineOptimizer_AllPermutations.optimize">[docs]</a>    <span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_total</span><span class="p">()</span>
+
+    <span class="n">min_complexity</span> <span class="o">=</span> <span class="mi">99999999</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">elements</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">state_word_len</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">permutation</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">permutations</span><span class="p">(</span><span class="n">elements</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state_tran</span><span class="p">)):</span>
+      <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="k">if</span> <span class="n">counter</span> <span class="o">&amp;</span> <span class="mh">0xff</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%%%3.2f</span><span class="s"> done</span><span class="se">\r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="mf">100.0</span><span class="o">*</span><span class="n">counter</span><span class="o">/</span><span class="n">total</span><span class="p">))</span>
+
+      <span class="n">state_map</span> <span class="o">=</span> <span class="p">{}</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state_tran</span><span class="p">)):</span>
+        <span class="n">state_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">permutation</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+      <span class="n">solution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sms</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">state_map</span><span class="p">)</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_all</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">((</span><span class="n">state_map</span><span class="p">,</span><span class="n">solution</span><span class="p">),)</span>
+
+      <span class="k">if</span> <span class="n">solution</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">min_complexity</span><span class="p">:</span>
+        <span class="n">min_complexity</span><span class="o">=</span><span class="n">solution</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_best</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">sms</span><span class="o">.</span><span class="n">print_solution</span><span class="p">(</span><span class="n">state_map</span><span class="p">,</span><span class="n">solution</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;</span></div></div>
+<span class="sd">This class implements a Moore state machine optimizer that tries permutations at</span>
+<span class="sd">random.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">class</span> <span class="nc">StateMachineOptimizer_Random</span><span class="p">(</span><span class="n">StateMachineOptimizer</span><span class="p">):</span>
+<div class="viewcode-block" id="StateMachineOptimizer_Random"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.StateMachineOptimizer_Random">[docs]</a>  <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tries</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">):</span>
+<div class="viewcode-block" id="StateMachineOptimizer_Random.optimize"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.StateMachineOptimizer_Random.optimize">[docs]</a>    <span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_total</span><span class="p">()</span>
+
+    <span class="n">min_complexity</span> <span class="o">=</span> <span class="mi">99999999</span>
+    <span class="k">for</span> <span class="n">counter</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">tries</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">counter</span> <span class="o">&amp;</span> <span class="mh">0xff</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Tried </span><span class="si">%d</span><span class="s"> random permutations out of </span><span class="si">%d</span><span class="s">.</span><span class="se">\r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">counter</span><span class="p">,</span>
+          <span class="n">total</span><span class="p">))</span>
+
+      <span class="n">permutation</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">state_word_len</span><span class="p">)</span>
+      <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">permutation</span><span class="p">)</span>
+
+      <span class="n">state_map</span> <span class="o">=</span> <span class="p">{}</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state_tran</span><span class="p">)):</span>
+        <span class="n">state_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">permutation</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+      <span class="n">solution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sms</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">state_map</span><span class="p">)</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_all</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">((</span><span class="n">state_map</span><span class="p">,</span><span class="n">solution</span><span class="p">),)</span>
+
+      <span class="k">if</span> <span class="n">solution</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">min_complexity</span><span class="p">:</span>
+        <span class="n">min_complexity</span><span class="o">=</span><span class="n">solution</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_best</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">sms</span><span class="o">.</span><span class="n">print_solution</span><span class="p">(</span><span class="n">state_map</span><span class="p">,</span><span class="n">solution</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;</span></div></div>
+<span class="sd">This class is used for testing the state machine optimizer.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">class</span> <span class="nc">StateMachineOptimizer_FileAndVerify</span><span class="p">(</span><span class="n">StateMachineOptimizer</span><span class="p">):</span>
+<div class="viewcode-block" id="StateMachineOptimizer_FileAndVerify"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.StateMachineOptimizer_FileAndVerify">[docs]</a>  <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">file</span><span class="p">):</span>
+<div class="viewcode-block" id="StateMachineOptimizer_FileAndVerify.optimize"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.StateMachineOptimizer_FileAndVerify.optimize">[docs]</a>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+      <span class="nb">input</span><span class="p">,</span><span class="n">expected_output</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+      <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sms</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+      <span class="k">assert</span> <span class="n">expected_output</span> <span class="o">==</span> <span class="n">output</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span></div></div>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../BinPy.Algorithms.html#BinPy.Algorithms.MooreOptimizer.main">[docs]</a>  <span class="n">state_tran</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">0</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span><span class="n">v</span><span class="p">:</span> <span class="n">s</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span><span class="n">v</span><span class="p">:</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;A&#39;</span><span class="p">])</span><span class="ow">or</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;B&#39;</span><span class="p">]),</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span><span class="n">v</span><span class="p">:</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;A&#39;</span><span class="p">])</span><span class="ow">or</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;B&#39;</span><span class="p">]),</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span><span class="n">v</span><span class="p">:</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;B&#39;</span><span class="p">],</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span><span class="n">v</span><span class="p">:</span> <span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">and</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;B&#39;</span><span class="p">],</span>
+    <span class="mi">5</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span><span class="n">v</span><span class="p">:</span> <span class="n">s</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="ow">or</span> <span class="n">s</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+  <span class="p">}</span>
+
+  <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span><span class="n">v</span><span class="p">:</span> <span class="ow">not</span> <span class="n">s</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+    <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span><span class="n">v</span><span class="p">:</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="n">s</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+    <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span><span class="n">v</span><span class="p">:</span> <span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">or</span> <span class="n">s</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="ow">or</span> <span class="n">s</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+  <span class="p">]</span>
+
+  <span class="n">variables</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">]</span>
+
+  <span class="n">state_word_len</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="n">opti</span> <span class="o">=</span> <span class="n">StateMachineOptimizer_Random</span><span class="p">(</span><span class="n">state_tran</span><span class="p">,</span> <span class="n">state_word_len</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">print_best</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+  <span class="n">opti</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span>
+
+  <span class="c">#state_word_len = 3</span>
+  <span class="c">#sms = StateMachineSolver(state_tran, state_word_len, variables, outputs)</span>
+  <span class="c">#state_map = {0:0,1:1,2:2,3:3,4:4,5:5}</span>
+  <span class="c">#solution = sms.solve(state_map)</span>
+  <span class="c">#sms.print_solution(state_map,solution)</span>
+
+  <span class="c">#state_word_len = 3</span>
+  <span class="c">#opti = StateMachineOptimizer_AllPermutations(state_tran, state_word_len, variables, outputs, print_best = True)</span>
+  <span class="c">#opti.optimize()</span>
+
+  <span class="c">#state_word_len = 4</span>
+  <span class="c">#opti = StateMachineOptimizer_Random(state_tran, state_word_len, variables, outputs, print_best = True)</span>
+  <span class="c">#opti.optimize(tries = 500)</span>
+
+  <span class="c">#state_word_len = 3</span>
+  <span class="c">#opti = StateMachineOptimizer_FileAndVerify(state_tran, state_word_len, variables, outputs)</span>
+  <span class="c">#opti.optimize(&#39;testdata.txt&#39;)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span></div>
+  <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Binpy Developers.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

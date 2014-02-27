@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>BinPy.Shell.Shell &mdash; Binpy Dev documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     'Dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Binpy Dev documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../../../index.html">
+          <span>Binpy Dev documentation</span></a></h1>
+        <h2 class="heading"><span>BinPy.Shell.Shell</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Source code for BinPy.Shell.Shell</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">BinPy.__init__</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">BinPy</span> <span class="kn">import</span> <span class="n">__version__</span> <span class="k">as</span> <span class="n">BINPY_VERSION</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">BINPY_VERSION</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+
+<div class="viewcode-block" id="shellclear"><a class="viewcode-back" href="../../../BinPy.Shell.html#BinPy.Shell.Shell.shellclear">[docs]</a><span class="k">def</span> <span class="nf">shellclear</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s">&quot;Windows&quot;</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s">&quot;clear&quot;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="magic_clear"><a class="viewcode-back" href="../../../BinPy.Shell.html#BinPy.Shell.Shell.magic_clear">[docs]</a><span class="k">def</span> <span class="nf">magic_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+    <span class="n">shellclear</span><span class="p">()</span>
+</div>
+<span class="n">banner</span> <span class="o">=</span> <span class="s">&#39;+-----------------------------------------------------------+</span><span class="se">\n</span><span class="s">&#39;</span>
+<span class="n">banner</span> <span class="o">+=</span> <span class="s">&#39; BinPy &#39;</span>
+<span class="n">banner</span> <span class="o">+=</span> <span class="n">BINPY_VERSION</span>
+<span class="n">banner</span> <span class="o">+=</span> <span class="s">&#39; [interactive shell]</span><span class="se">\n</span><span class="s">&#39;</span>
+<span class="n">banner</span> <span class="o">+=</span> <span class="s">&#39;+-----------------------------------------------------------+</span><span class="se">\n</span><span class="s">&#39;</span>
+<span class="n">banner</span> <span class="o">+=</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+<span class="n">banner</span> <span class="o">+=</span> <span class="s">&#39;Commands: </span><span class="se">\n</span><span class="s">&#39;</span>
+<span class="n">banner</span> <span class="o">+=</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&quot;exit()&quot; or press &quot;Ctrl+ D&quot; to exit the shell</span><span class="se">\n</span><span class="s">&#39;</span>
+<span class="n">banner</span> <span class="o">+=</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&quot;clear()&quot; to clear the shell screen</span><span class="se">\n</span><span class="s">&#39;</span>
+<span class="n">banner</span> <span class="o">+=</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+
+<span class="n">exit_msg</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">... [Exiting the BinPy interactive shell] ...</span><span class="se">\n</span><span class="s">&#39;</span>
+
+<div class="viewcode-block" id="self_update"><a class="viewcode-back" href="../../../BinPy.Shell.html#BinPy.Shell.Shell.self_update">[docs]</a><span class="k">def</span> <span class="nf">self_update</span><span class="p">():</span>
+    <span class="n">URL</span> <span class="o">=</span> <span class="s">&quot;https://github.com/binpy/binpy/zipball/master&quot;</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="s">&quot;pip install -U </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">URL</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="s">&quot;sudo &quot;</span> <span class="o">+</span> <span class="n">command</span>
+
+    <span class="n">returncode</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="setupIpython"><a class="viewcode-back" href="../../../BinPy.Shell.html#BinPy.Shell.Shell.setupIpython">[docs]</a><span class="k">def</span> <span class="nf">setupIpython</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">IPython</span>
+        <span class="kn">from</span> <span class="nn">IPython.config.loader</span> <span class="kn">import</span> <span class="n">Config</span>
+        <span class="kn">from</span> <span class="nn">IPython.frontend.terminal.embed</span> <span class="kn">import</span> <span class="n">InteractiveShellEmbed</span>
+
+        <span class="n">cfg</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()</span>
+        <span class="n">cfg</span><span class="o">.</span><span class="n">PromptManager</span><span class="o">.</span><span class="n">in_template</span> <span class="o">=</span> <span class="s">&quot;BinPy:</span><span class="se">\\</span><span class="s">#&gt; &quot;</span>
+        <span class="n">cfg</span><span class="o">.</span><span class="n">PromptManager</span><span class="o">.</span><span class="n">out_template</span> <span class="o">=</span> <span class="s">&quot;BinPy:</span><span class="se">\\</span><span class="s">#: &quot;</span>
+        <span class="n">bpyShell</span> <span class="o">=</span> <span class="n">InteractiveShellEmbed</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">cfg</span><span class="p">,</span> <span class="n">banner1</span><span class="o">=</span><span class="n">banner</span><span class="p">,</span>
+                                         <span class="n">exit_msg</span><span class="o">=</span><span class="n">exit_msg</span><span class="p">)</span>
+        <span class="n">bpyShell</span><span class="o">.</span><span class="n">define_magic</span><span class="p">(</span><span class="s">&quot;clear&quot;</span><span class="p">,</span> <span class="n">magic_clear</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">IPython.Shell</span> <span class="kn">import</span> <span class="n">IPShellEmbed</span>
+            <span class="n">argsv</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;-pi1&#39;</span><span class="p">,</span> <span class="s">&#39;BinPY:</span><span class="se">\\</span><span class="s">#&gt;&#39;</span><span class="p">,</span> <span class="s">&#39;-pi2&#39;</span><span class="p">,</span> <span class="s">&#39;   .</span><span class="se">\\</span><span class="s">D.:&#39;</span><span class="p">,</span> <span class="s">&#39;-po&#39;</span><span class="p">,</span>
+                     <span class="s">&#39;BinPy:</span><span class="se">\\</span><span class="s">#&gt;&#39;</span><span class="p">,</span> <span class="s">&#39;-nosep&#39;</span><span class="p">]</span>
+            <span class="n">bpyShell</span> <span class="o">=</span> <span class="n">IPShellEmbed</span><span class="p">(</span><span class="n">argsv</span><span class="p">)</span>
+            <span class="n">bpyShell</span><span class="o">.</span><span class="n">set_banner</span><span class="p">(</span><span class="n">banner</span><span class="p">)</span>
+            <span class="n">bpyShell</span><span class="o">.</span><span class="n">set_exit_msg</span><span class="p">(</span><span class="n">exit_msg</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="k">raise</span>
+
+    <span class="k">return</span> <span class="n">bpyShell</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="shellMain"><a class="viewcode-back" href="../../../BinPy.Shell.html#BinPy.Shell.Shell.shellMain">[docs]</a><span class="k">def</span> <span class="nf">shellMain</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">log_level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">print</span> <span class="n">flag</span>
+
+        <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="s">&#39;update&#39;</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Updating BinPy...&quot;</span>
+            <span class="n">self_update</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">flag</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;--nowarnings&#39;</span><span class="p">,</span> <span class="s">&#39;nowarnings&#39;</span><span class="p">]:</span>
+            <span class="n">log_level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span>
+        <span class="k">elif</span> <span class="n">flag</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;--debug&#39;</span><span class="p">,</span> <span class="s">&#39;debug&#39;</span><span class="p">]:</span>
+            <span class="n">log_level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span>
+
+    <span class="n">init_logging</span><span class="p">(</span><span class="n">log_level</span><span class="p">)</span>
+    <span class="n">shellclear</span><span class="p">()</span>
+    <span class="n">bpyShell</span> <span class="o">=</span> <span class="n">setupIpython</span><span class="p">()</span>
+
+            </div>
+</pre></div>
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Binpy Developers.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

@@ -4,6 +4,14 @@ BinPy.ic package
 Submodules
 ----------
 
+BinPy.ic.base module
+--------------------
+
+.. automodule:: BinPy.ic.base
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 BinPy.ic.series_7400 module
 ---------------------------
 

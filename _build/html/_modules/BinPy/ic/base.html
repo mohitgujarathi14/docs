@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>BinPy.ic.base &mdash; Binpy Dev documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     'Dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Binpy Dev documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../../../index.html">
+          <span>Binpy Dev documentation</span></a></h1>
+        <h2 class="heading"><span>BinPy.ic.base</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Source code for BinPy.ic.base</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module includes all the base classes for different ICs.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="IC"><a class="viewcode-back" href="../../../BinPy.ic.html#BinPy.ic.base.IC">[docs]</a><span class="k">class</span> <span class="nc">IC</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a base class for IC</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>	    
+    
+<div class="viewcode-block" id="IC.setIC"><a class="viewcode-back" href="../../../BinPy.ic.html#BinPy.ic.base.IC.setIC">[docs]</a>    <span class="k">def</span> <span class="nf">setIC</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pin_conf</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method takes a dictionary with key:pin_no and value:pin_value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pin_conf</span><span class="p">:</span>
+	    <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">pin_conf</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</div></div>
+<div class="viewcode-block" id="Base_5pin"><a class="viewcode-back" href="../../../BinPy.ic.html#BinPy.ic.base.Base_5pin">[docs]</a><span class="k">class</span> <span class="nc">Base_5pin</span><span class="p">(</span><span class="n">IC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method takes base class for IC&#39;s having 5 pins</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Base_5pin.setPin"><a class="viewcode-back" href="../../../BinPy.ic.html#BinPy.ic.base.Base_5pin.setPin">[docs]</a>    <span class="k">def</span> <span class="nf">setPin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pin_no</span><span class="p">,</span> <span class="n">pin_value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">pin_no</span><span class="o">&lt;</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">pin_no</span><span class="o">&gt;</span><span class="mi">5</span><span class="p">:</span>
+	    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;ERROR: There are only 5 pins in this IC&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="n">pin_no</span><span class="p">]</span> <span class="o">=</span> <span class="n">pin_value</span>
+</div></div>
+<div class="viewcode-block" id="Base_14pin"><a class="viewcode-back" href="../../../BinPy.ic.html#BinPy.ic.base.Base_14pin">[docs]</a><span class="k">class</span> <span class="nc">Base_14pin</span><span class="p">(</span><span class="n">IC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method takes base class for IC&#39;s having 14 pins</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Base_14pin.setPin"><a class="viewcode-back" href="../../../BinPy.ic.html#BinPy.ic.base.Base_14pin.setPin">[docs]</a>    <span class="k">def</span> <span class="nf">setPin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pin_no</span><span class="p">,</span> <span class="n">pin_value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">pin_no</span><span class="o">&lt;</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">pin_no</span><span class="o">&gt;</span><span class="mi">14</span><span class="p">:</span>
+	    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;ERROR: There are only 14 pins in this IC&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="n">pin_no</span><span class="p">]</span> <span class="o">=</span> <span class="n">pin_value</span>
+</div></div>
+<div class="viewcode-block" id="Base_16pin"><a class="viewcode-back" href="../../../BinPy.ic.html#BinPy.ic.base.Base_16pin">[docs]</a><span class="k">class</span> <span class="nc">Base_16pin</span><span class="p">(</span><span class="n">IC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method takes base class for IC&#39;s having 16 pins</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Base_16pin.setPin"><a class="viewcode-back" href="../../../BinPy.ic.html#BinPy.ic.base.Base_16pin.setPin">[docs]</a>    <span class="k">def</span> <span class="nf">setPin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pin_no</span><span class="p">,</span> <span class="n">pin_value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">pin_no</span><span class="o">&lt;</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">pin_no</span><span class="o">&gt;</span><span class="mi">16</span><span class="p">:</span>
+	    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;ERROR: There are only 16 pins in this IC&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="n">pin_no</span><span class="p">]</span> <span class="o">=</span> <span class="n">pin_value</span></div></div>
+</pre></div>
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2014, Binpy Developers.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

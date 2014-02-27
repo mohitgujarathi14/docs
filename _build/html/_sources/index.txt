@@ -1,20 +1,10 @@
 .. BinPy documentation master file, created by
-   sphinx-quickstart on Fri Feb 14 13:13:51 2014.
+   sphinx-quickstart on Thu Feb 27 23:22:51 2014.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
 Welcome to BinPy's documentation!
 =================================
-It is a library which will serve as a base to develop circuit based applications and educational software on top of it. BinPy is a clear representaion of fundamentals. Everything has been written from scratch such as gates, logical operations, etc. This package does not depend on any external library other than pure Python.
-
-We use GitHub for project management and collaborations.
-Setting up development environment for BinPy is pretty easy. You just need to have Python installed on your computer.
-
-git clone https://github.com/BinPy/BinPy
-
-That's all! Start contributing!
-
-For further queries mail us at binpylib@gmail.com or join our Google group(binpy@googlegroups.com)
 
 Contents:
 
@@ -22,6 +12,7 @@ Contents:
    :maxdepth: 4
 
    BinPy
+   setup
 
 
 Indices and tables

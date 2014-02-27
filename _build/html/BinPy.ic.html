@@ -6,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>BinPy.ic package &mdash; BinPy 1.0.8 documentation</title>
+    <title>BinPy.ic package &mdash; Binpy Dev documentation</title>
     
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0.8',
+        VERSION:     'Dev',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,63 +23,100 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="BinPy 1.0.8 documentation" href="index.html" />
+    <link rel="top" title="Binpy Dev documentation" href="index.html" />
     <link rel="up" title="BinPy package" href="BinPy.html" />
-    <link rel="next" title="BinPy.tools package" href="BinPy.tools.html" />
-    <link rel="prev" title="BinPy.gates package" href="BinPy.gates.html" /> 
+    <link rel="next" title="BinPy.tests package" href="BinPy.tests.html" />
+    <link rel="prev" title="BinPy.Shell package" href="BinPy.Shell.html" /> 
   </head>
   <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="BinPy.tools.html" title="BinPy.tools package"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="BinPy.gates.html" title="BinPy.gates package"
-             accesskey="P">previous</a> |</li>
-        <li><a href="index.html">BinPy 1.0.8 documentation</a> &raquo;</li>
-          <li><a href="BinPy.html" accesskey="U">BinPy package</a> &raquo;</li> 
-      </ul>
-    </div>  
+      <div class="header"><h1 class="heading"><a href="index.html">
+          <span>Binpy Dev documentation</span></a></h1>
+        <h2 class="heading"><span>BinPy.ic package</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="BinPy.Shell.html">BinPy.Shell package</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="BinPy.tests.html">BinPy.tests package</a>&#160;&#160;»
+        </p>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
-            
+      </div>
+      <div class="content">
+        
+        
   <div class="section" id="binpy-ic-package">
 <h1>BinPy.ic package<a class="headerlink" href="#binpy-ic-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-BinPy.ic.series_7400">
-<span id="binpy-ic-series-7400-module"></span><h2>BinPy.ic.series_7400 module<a class="headerlink" href="#module-BinPy.ic.series_7400" title="Permalink to this headline">¶</a></h2>
-<p>This file has all the classes of ICs belong to 7400 series</p>
+<div class="section" id="module-BinPy.ic.base">
+<span id="binpy-ic-base-module"></span><h2>BinPy.ic.base module<a class="headerlink" href="#module-BinPy.ic.base" title="Permalink to this headline">¶</a></h2>
+<p>This module includes all the base classes for different ICs.</p>
 <dl class="class">
-<dt id="BinPy.ic.series_7400.IC_7400">
-<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7400</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7400"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7400" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a Quad 2 input NAND gate IC</p>
+<dt id="BinPy.ic.base.Base_14pin">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.base.</tt><tt class="descname">Base_14pin</tt><a class="reference internal" href="_modules/BinPy/ic/base.html#Base_14pin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.Base_14pin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.IC" title="BinPy.ic.base.IC"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.IC</span></tt></a></p>
+<p>This method takes base class for IC&#8217;s having 14 pins</p>
 <dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7400.run">
-<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7400.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7400.run" title="Permalink to this definition">¶</a></dt>
+<dt id="BinPy.ic.base.Base_14pin.setPin">
+<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/base.html#Base_14pin.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.Base_14pin.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.base.Base_16pin">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.base.</tt><tt class="descname">Base_16pin</tt><a class="reference internal" href="_modules/BinPy/ic/base.html#Base_16pin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.Base_16pin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.IC" title="BinPy.ic.base.IC"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.IC</span></tt></a></p>
+<p>This method takes base class for IC&#8217;s having 16 pins</p>
 <dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7400.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7400.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7400.setIC" title="Permalink to this definition">¶</a></dt>
+<dt id="BinPy.ic.base.Base_16pin.setPin">
+<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/base.html#Base_16pin.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.Base_16pin.setPin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.base.Base_5pin">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.base.</tt><tt class="descname">Base_5pin</tt><a class="reference internal" href="_modules/BinPy/ic/base.html#Base_5pin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.Base_5pin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.IC" title="BinPy.ic.base.IC"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.IC</span></tt></a></p>
+<p>This method takes base class for IC&#8217;s having 5 pins</p>
+<dl class="method">
+<dt id="BinPy.ic.base.Base_5pin.setPin">
+<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/base.html#Base_5pin.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.Base_5pin.setPin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.base.IC">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.base.</tt><tt class="descname">IC</tt><a class="reference internal" href="_modules/BinPy/ic/base.html#IC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.IC" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a base class for IC</p>
+<dl class="method">
+<dt id="BinPy.ic.base.IC.setIC">
+<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/base.html#IC.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.IC.setIC" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
 </dd></dl>
 
+</dd></dl>
+
+</div>
+<div class="section" id="module-BinPy.ic.series_7400">
+<span id="binpy-ic-series-7400-module"></span><h2>BinPy.ic.series_7400 module<a class="headerlink" href="#module-BinPy.ic.series_7400" title="Permalink to this headline">¶</a></h2>
+<p>This module has all the classes of ICs belonging to 7400 series.</p>
+<p>Please note that the length of list self.pins is 1 more than the number of actual pins. This is so because pin0
+is not used as a general term referring to the first pin of the IC. Zeroth index of the self.pins is not being used.</p>
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7400">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7400</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7400"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7400" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Quad 2 Input NAND gate IC</p>
 <dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7400.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7400.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7400.setPin" title="Permalink to this definition">¶</a></dt>
+<dt id="BinPy.ic.series_7400.IC_7400.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7400.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7400.run" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -87,21 +124,11 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7401">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7401</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7401"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7401" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a Quad 2 input NAND gate IC</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Quad 2-input open-collector NAND gate IC</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7401.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7401.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7401.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7401.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7401.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7401.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7401.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7401.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7401.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -109,21 +136,11 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7402">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7402</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7402"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7402" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a Quad 2 input NOR gate IC</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Quad 2-input NOR gate IC</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7402.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7402.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7402.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7402.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7402.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7402.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7402.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7402.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7402.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -131,21 +148,11 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7403">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7403</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7403"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7403" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a Quad 2 input NAND gate IC</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Quad 2-input open-collector NAND gate IC</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7403.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7403.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7403.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7403.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7403.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7403.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7403.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7403.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7403.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -153,21 +160,11 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7404">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7404</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7404"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7404" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is hex inverter IC</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a hex inverter IC</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7404.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7404.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7404.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7404.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7404.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7404.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7404.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7404.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7404.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -175,21 +172,11 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7405">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7405</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7405"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7405" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is hex inverter IC</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is hex open-collector inverter IC</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7405.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7405.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7405.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7405.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7405.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7405.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7405.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7405.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7405.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -197,21 +184,11 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7408">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7408</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7408"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7408" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a Quad 2 input AND gate IC</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Quad 2 input AND gate IC</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7408.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7408.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7408.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7408.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7408.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7408.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7408.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7408.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7408.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -219,21 +196,11 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7410">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7410</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7410"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7410" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a Triple 3 input NAND gate IC</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Triple 3 input NAND gate IC</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7410.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7410.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7410.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7410.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7410.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7410.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7410.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7410.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7410.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -241,21 +208,11 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7411">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7411</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7411"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7411" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a Triple 3 input AND gate IC</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Triple 3 input AND gate IC</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7411.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7411.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7411.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7411.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7411.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7411.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7411.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7411.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7411.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -263,21 +220,35 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7412">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7412</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7412"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7412" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a Triple 3 input NAND gate IC with open collector outputs</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Triple 3 input NAND gate IC with open collector outputs</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7412.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7412.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7412.run" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7412.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7412.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7412.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
 </dd></dl>
 
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7413">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7413</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7413"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7413" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a dual 4 input NAND gate IC</p>
 <dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7412.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7412.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7412.setPin" title="Permalink to this definition">¶</a></dt>
+<dt id="BinPy.ic.series_7400.IC_7413.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7413.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7413.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_74133">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_74133</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_74133"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_74133" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_16pin" title="BinPy.ic.base.Base_16pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_16pin</span></tt></a></p>
+<p>This is a 13-input NAND gate</p>
+<dl class="method">
+<dt id="BinPy.ic.series_7400.IC_74133.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_74133.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_74133.run" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -285,21 +256,59 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7415">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7415</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7415"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7415" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a Triple 3 input AND gate IC with open collector outputs</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Triple 3 input AND gate IC with open collector outputs</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7415.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7415.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7415.run" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7415.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7415.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7415.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
 </dd></dl>
 
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7416">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7416</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7416"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7416" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Hex open-collector high-voltage inverter</p>
 <dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7415.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7415.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7415.setPin" title="Permalink to this definition">¶</a></dt>
+<dt id="BinPy.ic.series_7400.IC_7416.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7416.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7416.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7417">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7417</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7417"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7417" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Hex open-collector high-voltage buffer</p>
+<dl class="method">
+<dt id="BinPy.ic.series_7400.IC_7417.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7417.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7417.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7418">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7418</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7418"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7418" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Dual 4-input NAND gates with schmitt-trigger inputs.</p>
+<dl class="method">
+<dt id="BinPy.ic.series_7400.IC_7418.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7418.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7418.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7419">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7419</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7419"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7419" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Hex inverters with schmitt-trigger line-receiver inputs.</p>
+<dl class="method">
+<dt id="BinPy.ic.series_7400.IC_7419.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7419.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7419.run" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -307,21 +316,11 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_741G00">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_741G00</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G00"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G00" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a single 2 input NAND gate IC</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_5pin" title="BinPy.ic.base.Base_5pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_5pin</span></tt></a></p>
+<p>This is a single 2 input NAND gate IC</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_741G00.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G00.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G00.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_741G00.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G00.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G00.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_741G00.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G00.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G00.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -329,21 +328,11 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_741G02">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_741G02</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G02"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G02" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a single 2 input NOR gate IC</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_5pin" title="BinPy.ic.base.Base_5pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_5pin</span></tt></a></p>
+<p>This is a single 2 input NOR gate IC</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_741G02.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G02.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G02.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_741G02.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G02.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G02.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_741G02.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G02.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G02.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -351,21 +340,11 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_741G03">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_741G03</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G03"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G03" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a single 2 input NAND gate IC</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_5pin" title="BinPy.ic.base.Base_5pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_5pin</span></tt></a></p>
+<p>This is a single 2 input NAND gate IC</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_741G03.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G03.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G03.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_741G03.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G03.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G03.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_741G03.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G03.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G03.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -373,21 +352,11 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_741G04">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_741G04</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G04"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G04" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a single inverter IC</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_5pin" title="BinPy.ic.base.Base_5pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_5pin</span></tt></a></p>
+<p>This is a single inverter IC</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_741G04.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G04.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G04.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_741G04.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G04.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G04.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_741G04.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G04.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G04.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -395,21 +364,11 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_741G05">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_741G05</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G05"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G05" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a single inverter IC</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_5pin" title="BinPy.ic.base.Base_5pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_5pin</span></tt></a></p>
+<p>This is a single 2 input NAND gate IC</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_741G05.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G05.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G05.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_741G05.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G05.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G05.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_741G05.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G05.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G05.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -417,21 +376,11 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_741G08">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_741G08</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G08"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G08" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a single 2 input AND gate IC</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_5pin" title="BinPy.ic.base.Base_5pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_5pin</span></tt></a></p>
+<p>This is a single 2 input AND gate IC</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_741G08.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G08.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G08.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_741G08.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G08.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G08.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_741G08.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_741G08.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_741G08.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -439,21 +388,11 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7420">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7420</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7420"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7420" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a is a dual 4-input NAND gate</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a dual 4-input NAND gate</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7420.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7420.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7420.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7420.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7420.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7420.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7420.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7420.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7420.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -461,21 +400,11 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7421">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7421</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7421"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7421" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a is a dual 4-input AND gate</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a dual 4-input AND gate</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7421.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7421.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7421.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7421.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7421.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7421.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7421.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7421.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7421.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -483,21 +412,167 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7422">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7422</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7422"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7422" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a is a dual 4-input NAND gate with open collector outputs</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a dual 4-input NAND gate with open collector outputs</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7422.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7422.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7422.run" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7422.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7422.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7422.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
 </dd></dl>
 
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7424">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7424</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7424"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7424" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Quad 2-input NAND gates with schmitt-trigger line-receiver inputs</p>
 <dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7422.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7422.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7422.setPin" title="Permalink to this definition">¶</a></dt>
+<dt id="BinPy.ic.series_7400.IC_7424.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7424.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7424.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7425">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7425</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7425"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7425" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Dual 4-Input NOR Gate with Strobe</p>
+<dl class="method">
+<dt id="BinPy.ic.series_7400.IC_7425.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7425.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7425.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7426">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7426</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7426"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7426" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Quad 2-input open-collector high-voltage NAND gates.</p>
+<dl class="method">
+<dt id="BinPy.ic.series_7400.IC_7426.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7426.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7426.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_74260">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_74260</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_74260"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_74260" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a dual 5-input NOR gate</p>
+<dl class="method">
+<dt id="BinPy.ic.series_7400.IC_74260.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_74260.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_74260.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7427">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7427</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7427"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7427" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Triple 3-Input NOR Gate</p>
+<dl class="method">
+<dt id="BinPy.ic.series_7400.IC_7427.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7427.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7427.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7428">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7428</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7428"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7428" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Quad 2-input NOR gates with buffered outputs.</p>
+<dl class="method">
+<dt id="BinPy.ic.series_7400.IC_7428.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7428.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7428.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7430">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7430</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7430"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7430" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a 8-Input NAND Gate</p>
+<dl class="method">
+<dt id="BinPy.ic.series_7400.IC_7430.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7430.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7430.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7431">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7431</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7431"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7431" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_16pin" title="BinPy.ic.base.Base_16pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_16pin</span></tt></a></p>
+<p>This is a Hex delay element.</p>
+<dl class="method">
+<dt id="BinPy.ic.series_7400.IC_7431.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7431.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7431.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7432">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7432</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7432"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7432" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Quad 2-Input OR Gate</p>
+<dl class="method">
+<dt id="BinPy.ic.series_7400.IC_7432.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7432.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7432.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7433">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7433</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7433"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7433" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Quad 2-input open-collector NOR gate</p>
+<dl class="method">
+<dt id="BinPy.ic.series_7400.IC_7433.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7433.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7433.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7437">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7437</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7437"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7437" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Quad 2-input NAND gates with buffered output</p>
+<dl class="method">
+<dt id="BinPy.ic.series_7400.IC_7437.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7437.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7437.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7438">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7438</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7438"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7438" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Quad 2-Input NAND Buffer with Open Collector Output</p>
+<dl class="method">
+<dt id="BinPy.ic.series_7400.IC_7438.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7438.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7438.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7440">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7440</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7440"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7440" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Dual 4-Input NAND Buffer</p>
+<dl class="method">
+<dt id="BinPy.ic.series_7400.IC_7440.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7440.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7440.run" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -505,22 +580,12 @@
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7442">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7442</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7442"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7442" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a BCD to Decimal decoder
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_16pin" title="BinPy.ic.base.Base_16pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_16pin</span></tt></a></p>
+<p>This is a BCD to Decimal decoder
 BCD Digits are in order of A B C D where pin 15 = A, pin 12 = D</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7442.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7442.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7442.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7442.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7442.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7442.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7442.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7442.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7442.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -528,22 +593,12 @@ BCD Digits are in order of A B C D where pin 15 = A, pin 12 = D</p>
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7443">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7443</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7443"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7443" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is an excess-3 to Decimal decoder
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_16pin" title="BinPy.ic.base.Base_16pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_16pin</span></tt></a></p>
+<p>This is an excess-3 to Decimal decoder
 Excess-3 binary digits are in order of A B C D, where pin 15 = A and pin 12 = D</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7443.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7443.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7443.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7443.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7443.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7443.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7443.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7443.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7443.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -551,22 +606,25 @@ Excess-3 binary digits are in order of A B C D, where pin 15 = A and pin 12 = D<
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7444">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7444</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7444"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7444" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is an excess-3 gray code to Decimal decoder
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_16pin" title="BinPy.ic.base.Base_16pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_16pin</span></tt></a></p>
+<p>This is an excess-3 gray code to Decimal decoder
 Excess-3 gray code digits are in order of A B C D, where pin 15 = A and pin 12 = D</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7444.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7444.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7444.run" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7444.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7444.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7444.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
 </dd></dl>
 
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7445">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7445</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7445"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7445" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_16pin" title="BinPy.ic.base.Base_16pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_16pin</span></tt></a></p>
+<p>This is a Four-to-Ten (BCD to Decimal) DECODER
+datasheet at <a class="reference external" href="http://www.skot9000.com/ttl/datasheets/45.pdf">http://www.skot9000.com/ttl/datasheets/45.pdf</a></p>
 <dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7444.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7444.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7444.setPin" title="Permalink to this definition">¶</a></dt>
+<dt id="BinPy.ic.series_7400.IC_7445.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7445.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7445.run" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -574,21 +632,11 @@ Excess-3 gray code digits are in order of A B C D, where pin 15 = A and pin 12 =
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7451">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7451</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7451"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7451" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a dual 2-wide 2-input AND-OR Invert gate</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a dual 2-wide 2-input AND-OR Invert gate</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7451.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7451.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7451.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7451.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7451.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7451.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7451.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7451.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7451.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -596,21 +644,11 @@ Excess-3 gray code digits are in order of A B C D, where pin 15 = A and pin 12 =
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7454">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7454</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7454"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7454" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a 4-wide 2-input AND-OR Invert gate</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a 4-wide 2-input AND-OR Invert gate</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7454.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7454.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7454.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7454.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7454.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7454.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7454.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7454.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7454.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -618,21 +656,11 @@ Excess-3 gray code digits are in order of A B C D, where pin 15 = A and pin 12 =
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7455">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7455</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7455"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7455" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a 4-wide 2-input AND-OR Invert gate</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a 4-wide 2-input AND-OR Invert gate</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7455.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7455.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7455.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7455.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7455.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7455.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7455.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7455.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7455.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -640,34 +668,42 @@ Excess-3 gray code digits are in order of A B C D, where pin 15 = A and pin 12 =
 <dl class="class">
 <dt id="BinPy.ic.series_7400.IC_7458">
 <em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7458</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7458"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7458" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a 2-input and 3-input AND-OR gate</p>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a 2-input and 3-input AND-OR gate</p>
 <dl class="method">
 <dt id="BinPy.ic.series_7400.IC_7458.run">
 <tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7458.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7458.run" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7458.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7458.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7458.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
 </dd></dl>
 
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7464">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7464</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7464"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7464" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a 4-2-3-2 input AND-OR-invert gate</p>
 <dl class="method">
-<dt id="BinPy.ic.series_7400.IC_7458.setPin">
-<tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7458.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7458.setPin" title="Permalink to this definition">¶</a></dt>
+<dt id="BinPy.ic.series_7400.IC_7464.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7464.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7464.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_7400.IC_7486">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400.</tt><tt class="descname">IC_7486</tt><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7486"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7486" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a quad 2-input exclusive OR gate</p>
+<dl class="method">
+<dt id="BinPy.ic.series_7400.IC_7486.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400.html#IC_7486.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400.IC_7486.run" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </div>
-<div class="section" id="module-BinPy.ic.series_7400_1">
-<span id="binpy-ic-series-7400-1-module"></span><h2>BinPy.ic.series_7400_1 module<a class="headerlink" href="#module-BinPy.ic.series_7400_1" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="BinPy.ic.series_7400_1.IC_7400">
-<em class="property">class </em><tt class="descclassname">BinPy.ic.series_7400_1.</tt><tt class="descname">IC_7400</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_7400_1.html#IC_7400"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_7400_1.IC_7400" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="BinPy.gates.html#BinPy.gates.logic_objects.LC" title="BinPy.gates.logic_objects.LC"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.gates.logic_objects.LC</span></tt></a></p>
-</dd></dl>
-
+<div class="section" id="binpy-ic-series-7400-1-module">
+<h2>BinPy.ic.series_7400_1 module<a class="headerlink" href="#binpy-ic-series-7400-1-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-BinPy.ic">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-BinPy.ic" title="Permalink to this headline">¶</a></h2>
@@ -675,71 +711,21 @@ Excess-3 gray code digits are in order of A B C D, where pin 15 = A and pin 12 =
 </div>
 
 
-          </div>
-        </div>
       </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">BinPy.ic package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-BinPy.ic.series_7400">BinPy.ic.series_7400 module</a></li>
-<li><a class="reference internal" href="#module-BinPy.ic.series_7400_1">BinPy.ic.series_7400_1 module</a></li>
-<li><a class="reference internal" href="#module-BinPy.ic">Module contents</a></li>
-</ul>
-</li>
-</ul>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="BinPy.Shell.html">BinPy.Shell package</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="BinPy.tests.html">BinPy.tests package</a>&#160;&#160;»
+        </p>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="BinPy.gates.html"
-                        title="previous chapter">BinPy.gates package</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="BinPy.tools.html"
-                        title="next chapter">BinPy.tools package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/BinPy.ic.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="BinPy.tools.html" title="BinPy.tools package"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="BinPy.gates.html" title="BinPy.gates package"
-             >previous</a> |</li>
-        <li><a href="index.html">BinPy 1.0.8 documentation</a> &raquo;</li>
-          <li><a href="BinPy.html" >BinPy package</a> &raquo;</li> 
-      </ul>
-    </div>
+
     <div class="footer">
-        &copy; Copyright 2014, BinPy.
+        &copy; Copyright 2014, Binpy Developers.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
     </div>
   </body>

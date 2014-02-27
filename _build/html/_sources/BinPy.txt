@@ -6,12 +6,27 @@ Subpackages
 
 .. toctree::
 
-    BinPy.algorithms
-    BinPy.binary
-    BinPy.combi_logic
-    BinPy.gates
+    BinPy.Algorithms
+    BinPy.Combinational
+    BinPy.Gates
+    BinPy.Operations
+    BinPy.Sequential
+    BinPy.Shell
     BinPy.ic
+    BinPy.tests
     BinPy.tools
+
+Submodules
+----------
+
+BinPy.base module
+-----------------
+
+.. automodule:: BinPy.base
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
