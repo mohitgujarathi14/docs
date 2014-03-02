@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>BinPy.ic.series_4000 &mdash; Binpy Dev documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     'Dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Binpy Dev documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Binpy Dev documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for BinPy.ic.series_4000</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module has all the classes of ICs belonging to 4000 series.</span>
+
+<span class="sd">Please note that the length of list self.pins is 1 more than the number of actual pins. This is so because pin0</span>
+<span class="sd">is not used as a general term referring to the first pin of the IC. Zeroth index of the self.pins is not being used.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">BinPy</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">base</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c">######## IC&#39;s with 14 pins #################################</span>
+
+<div class="viewcode-block" id="IC_4081"><a class="viewcode-back" href="../../../BinPy.ic.html#BinPy.ic.series_4000.IC_4081">[docs]</a><span class="k">class</span> <span class="nc">IC_4081</span><span class="p">(</span><span class="n">Base_14pin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a Quad 2 Input AND gate IC</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">pins</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c">#Example of quick conversion from list of pins to list of pin instances</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pins</span> <span class="o">=</span> <span class="n">pinlist_quick</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uses_pincls</span> <span class="o">=</span> <span class="bp">True</span>
+    
+<div class="viewcode-block" id="IC_4081.run"><a class="viewcode-back" href="../../../BinPy.ic.html#BinPy.ic.series_4000.IC_4081.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">output</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>  <span class="o">=</span>  <span class="p">(</span>  <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">1</span><span class="p">]()</span>  <span class="o">&amp;</span> <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">2</span><span class="p">]()</span>    <span class="p">)()</span>
+        <span class="n">output</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>  <span class="o">=</span>  <span class="p">(</span>  <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">5</span><span class="p">]()</span>  <span class="o">&amp;</span> <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">6</span><span class="p">]()</span>    <span class="p">)()</span>
+        <span class="n">output</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span>  <span class="p">(</span>  <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">9</span><span class="p">]()</span>  <span class="o">&amp;</span> <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">3</span><span class="p">]()</span>    <span class="p">)()</span>
+        <span class="n">output</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">=</span>  <span class="p">(</span>  <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">12</span><span class="p">]()</span> <span class="o">&amp;</span> <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">13</span><span class="p">]()</span>   <span class="p">)()</span>
+        
+        <span class="c">#Pin class object when called returns its logic state.</span>
+        <span class="c">#Logic class object when called returns the boolean binary equivalent of its state.</span>
+        
+        <span class="c">#Output is a dict of logic values of each pin.</span>
+        
+        <span class="c">#Uncomment to set the output pins to the respective logic values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setIC</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="c">#Uncomment to draw the current I/O configuration of IC</span>
+        <span class="c">#self.drawIC()</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">output</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Ground and VCC pins have not been configured correctly.&quot;</span>
+</div></div>
+<div class="viewcode-block" id="IC_4082"><a class="viewcode-back" href="../../../BinPy.ic.html#BinPy.ic.series_4000.IC_4082">[docs]</a><span class="k">class</span> <span class="nc">IC_4082</span><span class="p">(</span><span class="n">Base_14pin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a Dual 4 Input AND gate IC</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">pins</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pins</span> <span class="o">=</span> <span class="n">pinlist_quick</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uses_pincls</span> <span class="o">=</span> <span class="bp">True</span>
+        
+        <span class="c">#Example of proper use of pin class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setIC</span> <span class="p">(</span> <span class="p">{</span> <span class="mi">1</span> <span class="p">:</span> <span class="p">{</span><span class="s">&#39;desc&#39;</span><span class="p">:</span><span class="s">&#39;Q1 : Output of AND gate 1&#39;</span><span class="p">},</span>
+                       <span class="mi">2</span> <span class="p">:</span> <span class="p">{</span><span class="s">&#39;desc&#39;</span><span class="p">:</span><span class="s">&#39;A1 : Input 1 of AND gate 1&#39;</span><span class="p">},</span>
+                       <span class="mi">3</span> <span class="p">:</span> <span class="p">{</span><span class="s">&#39;desc&#39;</span><span class="p">:</span><span class="s">&#39;B1 : Input 2 of AND gate 1&#39;</span><span class="p">},</span>
+                       <span class="mi">4</span> <span class="p">:</span> <span class="p">{</span><span class="s">&#39;desc&#39;</span><span class="p">:</span><span class="s">&#39;C1 : Input 3 of AND gate 1&#39;</span><span class="p">},</span>
+                       <span class="mi">5</span> <span class="p">:</span> <span class="p">{</span><span class="s">&#39;desc&#39;</span><span class="p">:</span><span class="s">&#39;D1 : Input 4 of AND gate 1&#39;</span><span class="p">},</span>
+                       <span class="mi">6</span> <span class="p">:</span> <span class="p">{</span><span class="s">&#39;desc&#39;</span><span class="p">:</span><span class="s">&#39;NC &#39;</span><span class="p">},</span>
+                       <span class="mi">7</span> <span class="p">:</span> <span class="p">{</span><span class="s">&#39;desc&#39;</span><span class="p">:</span><span class="s">&#39;GND&#39;</span><span class="p">},</span>
+                       <span class="mi">8</span> <span class="p">:</span> <span class="p">{</span><span class="s">&#39;desc&#39;</span><span class="p">:</span><span class="s">&#39;NC &#39;</span><span class="p">},</span>
+                       <span class="mi">9</span> <span class="p">:</span> <span class="p">{</span><span class="s">&#39;desc&#39;</span><span class="p">:</span><span class="s">&#39;D2 : Input 4 of AND gate 2&#39;</span><span class="p">},</span>
+                       <span class="mi">10</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;desc&#39;</span><span class="p">:</span><span class="s">&#39;C2 : Input 3 of AND gate 2&#39;</span><span class="p">},</span>
+                       <span class="mi">11</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;desc&#39;</span><span class="p">:</span><span class="s">&#39;B2 : Input 2 of AND gate 2&#39;</span><span class="p">},</span>
+                       <span class="mi">12</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;desc&#39;</span><span class="p">:</span><span class="s">&#39;A2 : Input 1 of AND gate 2&#39;</span><span class="p">},</span>
+                       <span class="mi">13</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;desc&#39;</span><span class="p">:</span><span class="s">&#39;Q2 : Output of AND gate 2&#39;</span><span class="p">},</span>
+                       <span class="mi">14</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;desc&#39;</span><span class="p">:</span><span class="s">&#39;VCC&#39;</span><span class="p">}</span>
+                     <span class="p">}</span> <span class="p">)</span> 
+<div class="viewcode-block" id="IC_4082.run"><a class="viewcode-back" href="../../../BinPy.ic.html#BinPy.ic.series_4000.IC_4082.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">output</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>   <span class="o">=</span>  <span class="p">(</span>  <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">2</span><span class="p">]()</span>  <span class="o">&amp;</span>  <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">3</span><span class="p">]()</span>  <span class="o">&amp;</span>  <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">4</span><span class="p">]()</span>  <span class="o">&amp;</span>  <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">5</span><span class="p">]()</span>  <span class="p">)()</span>
+        <span class="n">output</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span>  <span class="o">=</span>  <span class="p">(</span>  <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">9</span><span class="p">]()</span>  <span class="o">&amp;</span>  <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">10</span><span class="p">]()</span> <span class="o">&amp;</span>  <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">11</span><span class="p">]()</span> <span class="o">&amp;</span>  <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">12</span><span class="p">]()</span> <span class="p">)()</span>
+        
+        <span class="c">#Pin class object when called returns its logic state as a logic class object which has overloaded operators.</span>
+        <span class="c">#Logic class object when called returns the boolean binary equivalent of its state.</span>
+        
+        <span class="c">#Uncomment to set the output pins to the respective logic values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setIC</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="c">#Uncomment to draw the current I/O configuration of IC</span>
+        <span class="c">#self.drawIC()</span>
+        
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">output</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Ground and VCC pins have not been configured correctly.&quot;</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Binpy Dev documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Binpy Developers.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

@@ -8,7 +8,7 @@
     
     <title>BinPy.Gates.gates &mdash; Binpy Dev documentation</title>
     
-    <link rel="stylesheet" href="../../../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -24,23 +24,35 @@
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <link rel="top" title="Binpy Dev documentation" href="../../../index.html" />
-    <link rel="up" title="Module code" href="../../index.html" /> 
+    <link rel="up" title="Module code" href="../../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
   </head>
   <body>
-      <div class="header"><h1 class="heading"><a href="../../../index.html">
-          <span>Binpy Dev documentation</span></a></h1>
-        <h2 class="heading"><span>BinPy.Gates.gates</span></h2>
-      </div>
-      <div class="topnav">
-      
-        <p>
-        <a class="uplink" href="../../../index.html">Contents</a>
-        </p>
 
-      </div>
-      <div class="content">
-        
-        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Binpy Dev documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
   <h1>Source code for BinPy.Gates.gates</h1><div class="highlight"><pre>
 <span class="kn">from</span> <span class="nn">connector</span> <span class="kn">import</span> <span class="o">*</span>
 
@@ -55,7 +67,7 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">history_active</span> <span class="o">=</span> <span class="mi">0</span> <span class="c"># Ignore history for first computation</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">outputType</span> <span class="o">=</span> <span class="mi">0</span> <span class="c"># 1-&gt;output goes to a connector class</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="mi">0</span> <span class="c">#To store the result</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">outputConnector</span> <span class="o">=</span> <span class="bp">None</span> <span class="c">#Valid only is outputType = 1</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">outputConnector</span> <span class="o">=</span> <span class="bp">None</span> <span class="c">#Valid only if outputType = 1</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[:]</span> <span class="c"># Set the inputs</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">history_inputs</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># Save a copy of the inputs</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">__updateConnections</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
@@ -89,7 +101,7 @@
 		<span class="k">if</span> <span class="n">index</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">):</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="c">#If the index is more than the length then append to the list</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">history_active</span> <span class="o">=</span> <span class="mi">0</span> <span class="c"># Dont use history after a new input is added</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_updateHistroy</span><span class="p">()</span> <span class="c"># because history_active is set to 0 trigger will get called irrespective of the history.</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_updateHistory</span><span class="p">()</span> <span class="c"># because history_active is set to 0 trigger will get called irrespective of the history.</span>
 
 		<span class="k">else</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">history_active</span> <span class="o">=</span> <span class="mi">1</span> <span class="c"># Use history before computing</span>
@@ -104,9 +116,14 @@
 
 		<span class="bp">self</span><span class="o">.</span><span class="n">trigger</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="GATES.inputs"><a class="viewcode-back" href="../../../BinPy.Gates.html#BinPy.Gates.gates.GATES.inputs">[docs]</a>	<span class="k">def</span> <span class="nf">inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span>
+<div class="viewcode-block" id="GATES.getInputStates"><a class="viewcode-back" href="../../../BinPy.Gates.html#BinPy.Gates.gates.GATES.getInputStates">[docs]</a>	<span class="k">def</span> <span class="nf">getInputStates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="n">input_states</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">Connector</span><span class="p">):</span>
+                                <span class="n">input_states</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                                <span class="n">input_states</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+		<span class="k">return</span> <span class="n">input_states</span>
 </div>
 	<span class="k">def</span> <span class="nf">_updateResult</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
 		
@@ -178,6 +195,7 @@
 			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
 				<span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">Connector</span><span class="p">)</span> <span class="ow">and</span> <span class="n">i</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="bp">False</span><span class="p">)</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">_updateResult</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+					<span class="k">break</span>
 
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputType</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">outputConnector</span><span class="o">.</span><span class="n">trigger</span><span class="p">()</span>
@@ -203,6 +221,7 @@
 			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
 				<span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">Connector</span><span class="p">)</span> <span class="ow">and</span> <span class="n">i</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="bp">True</span><span class="p">)</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">_updateResult</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+					<span class="k">break</span>
 
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputType</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">outputConnector</span><span class="o">.</span><span class="n">trigger</span><span class="p">()</span>
@@ -222,7 +241,7 @@
 
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compareHistory</span><span class="p">()</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">history_active</span> <span class="o">=</span> <span class="mi">1</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_updateResult</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+			<span class="c">#self._updateResult(True)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_updateHistory</span><span class="p">()</span> <span class="c"># Update the inputs after a computation</span>
 			
 			<span class="bp">self</span><span class="o">.</span><span class="n">_updateResult</span><span class="p">(</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span>
@@ -301,16 +320,17 @@
 
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compareHistory</span><span class="p">()</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">history_active</span> <span class="o">=</span> <span class="mi">1</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_updateResult</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_updateResult</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_updateHistory</span><span class="p">()</span> <span class="c"># Update the inputs after a computation</span>
 			
-			<span class="n">temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+			<span class="c">#temp = self.inputs[0]</span>
 
-			<span class="bp">self</span><span class="o">.</span><span class="n">_updateResult</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+			<span class="c">#self._updateResult(False)</span>
 
 			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
 				<span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">Connector</span><span class="p">)</span> <span class="ow">and</span> <span class="n">i</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="bp">False</span><span class="p">)</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">_updateResult</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+					<span class="k">break</span>
 
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputType</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">outputConnector</span><span class="o">.</span><span class="n">trigger</span><span class="p">()</span>
@@ -333,25 +353,52 @@
 			<span class="bp">self</span><span class="o">.</span><span class="n">_updateResult</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_updateHistory</span><span class="p">()</span> <span class="c"># Update the inputs after a computation</span>
 			
-			<span class="bp">self</span><span class="o">.</span><span class="n">_updateResult</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+			<span class="c">#self._updateResult(True)</span>
 
 			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
 				<span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">Connector</span><span class="p">)</span> <span class="ow">and</span> <span class="n">i</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="bp">True</span><span class="p">)</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">_updateResult</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+					<span class="k">break</span>
 
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputType</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">outputConnector</span><span class="o">.</span><span class="n">trigger</span><span class="p">()</span></div></div>
 </pre></div>
 
+          </div>
+        </div>
       </div>
-      <div class="bottomnav">
-      
-        <p>
-        <a class="uplink" href="../../../index.html">Contents</a>
-        </p>
-
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
       </div>
-
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Binpy Dev documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
     <div class="footer">
         &copy; Copyright 2014, Binpy Developers.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.

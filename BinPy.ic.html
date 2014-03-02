@@ -8,7 +8,7 @@
     
     <title>BinPy.ic package &mdash; Binpy Dev documentation</title>
     
-    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,27 +26,41 @@
     <link rel="top" title="Binpy Dev documentation" href="index.html" />
     <link rel="up" title="BinPy package" href="BinPy.html" />
     <link rel="next" title="BinPy.tests package" href="BinPy.tests.html" />
-    <link rel="prev" title="BinPy.Shell package" href="BinPy.Shell.html" /> 
+    <link rel="prev" title="BinPy.Shell package" href="BinPy.Shell.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
   </head>
   <body>
-      <div class="header"><h1 class="heading"><a href="index.html">
-          <span>Binpy Dev documentation</span></a></h1>
-        <h2 class="heading"><span>BinPy.ic package</span></h2>
-      </div>
-      <div class="topnav">
-      
-        <p>
-        «&#160;&#160;<a href="BinPy.Shell.html">BinPy.Shell package</a>
-        &#160;&#160;::&#160;&#160;
-        <a class="uplink" href="index.html">Contents</a>
-        &#160;&#160;::&#160;&#160;
-        <a href="BinPy.tests.html">BinPy.tests package</a>&#160;&#160;»
-        </p>
 
-      </div>
-      <div class="content">
-        
-        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="BinPy.tests.html" title="BinPy.tests package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="BinPy.Shell.html" title="BinPy.Shell package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Binpy Dev documentation</a> &raquo;</li>
+          <li><a href="BinPy.html" accesskey="U">BinPy package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
   <div class="section" id="binpy-ic-package">
 <h1>BinPy.ic package<a class="headerlink" href="#binpy-ic-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
@@ -65,6 +79,21 @@
 <tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/base.html#Base_14pin.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.Base_14pin.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="method">
+<dt id="BinPy.ic.base.Base_14pin.setPinParam">
+<tt class="descname">setPinParam</tt><big>(</big><em>pin_no</em>, <em>parm_dict</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/base.html#Base_14pin.setPinParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.Base_14pin.setPinParam" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="BinPy.ic.base.Base_14pin.total_pins">
+<tt class="descname">total_pins</tt><em class="property"> = 14</em><a class="headerlink" href="#BinPy.ic.base.Base_14pin.total_pins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="BinPy.ic.base.Base_14pin.uses_pincls">
+<tt class="descname">uses_pincls</tt><em class="property"> = False</em><a class="headerlink" href="#BinPy.ic.base.Base_14pin.uses_pincls" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -73,8 +102,23 @@
 <dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.IC" title="BinPy.ic.base.IC"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.IC</span></tt></a></p>
 <p>This method takes base class for IC&#8217;s having 16 pins</p>
 <dl class="method">
+<dt id="BinPy.ic.base.Base_16pin.SetPinParam">
+<tt class="descname">SetPinParam</tt><big>(</big><em>pin_no</em>, <em>parm_dict</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/base.html#Base_16pin.SetPinParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.Base_16pin.SetPinParam" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="BinPy.ic.base.Base_16pin.setPin">
 <tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/base.html#Base_16pin.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.Base_16pin.setPin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="BinPy.ic.base.Base_16pin.total_pins">
+<tt class="descname">total_pins</tt><em class="property"> = 16</em><a class="headerlink" href="#BinPy.ic.base.Base_16pin.total_pins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="BinPy.ic.base.Base_16pin.uses_pincls">
+<tt class="descname">uses_pincls</tt><em class="property"> = False</em><a class="headerlink" href="#BinPy.ic.base.Base_16pin.uses_pincls" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -89,6 +133,16 @@
 <tt class="descname">setPin</tt><big>(</big><em>pin_no</em>, <em>pin_value</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/base.html#Base_5pin.setPin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.Base_5pin.setPin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="attribute">
+<dt id="BinPy.ic.base.Base_5pin.total_pins">
+<tt class="descname">total_pins</tt><em class="property"> = 5</em><a class="headerlink" href="#BinPy.ic.base.Base_5pin.total_pins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="BinPy.ic.base.Base_5pin.uses_pincls">
+<tt class="descname">uses_pincls</tt><em class="property"> = False</em><a class="headerlink" href="#BinPy.ic.base.Base_5pin.uses_pincls" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -96,10 +150,74 @@
 <em class="property">class </em><tt class="descclassname">BinPy.ic.base.</tt><tt class="descname">IC</tt><a class="reference internal" href="_modules/BinPy/ic/base.html#IC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.IC" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a base class for IC</p>
 <dl class="method">
+<dt id="BinPy.ic.base.IC.drawIC">
+<tt class="descname">drawIC</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/base.html#IC.drawIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.IC.drawIC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="BinPy.ic.base.IC.setIC">
-<tt class="descname">setIC</tt><big>(</big><em>pin_conf</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/base.html#IC.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.IC.setIC" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method takes a dictionary with key:pin_no and value:pin_value</p>
+<tt class="descname">setIC</tt><big>(</big><em>param_dict</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/base.html#IC.setIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.IC.setIC" title="Permalink to this definition">¶</a></dt>
+<dd><p>If pin class is not used this method then it takes a dictionary with the format { PINNO:PINVALUE, ... }
+Else it takes a dictionary of dictionaries with the format -&gt; 
+{ PINNO:{PARAM1:VAL1, PARAM2:VAL2, ... }, PINNO2:{PARAM1:VAL1, PARAM2:VAL2, ... } , ... }</p>
 </dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.base.Pin">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.base.</tt><tt class="descname">Pin</tt><big>(</big><em>pin_no</em>, <em>param_dict={}</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/base.html#Pin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.Pin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pin class for defining a particular pin of an IC</p>
+<p>Sample param_dict for a pin :
+{ &#8216;value&#8217;:0, &#8216;desc&#8217;:&#8217;IN1: Input 1 of Mux&#8217;, &#8216;can_vary&#8217;:True }</p>
+<p>First 3 characters of desc will be used as pin_tag</p>
+<dl class="method">
+<dt id="BinPy.ic.base.Pin.setPinParam">
+<tt class="descname">setPinParam</tt><big>(</big><em>param_dict</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/base.html#Pin.setPinParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.Pin.setPinParam" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.base.logic">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.base.</tt><tt class="descname">logic</tt><big>(</big><em>value=0</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/base.html#logic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.logic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements methods of AND OR and EXOR using BinPy library Gate modules
+Remaps all basic python implementation of gates on variable of type bool to BinPy&#8217;s implementation of the same</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="BinPy.ic.base.pinlist_quick">
+<tt class="descclassname">BinPy.ic.base.</tt><tt class="descname">pinlist_quick</tt><big>(</big><em>first_arg</em><big>)</big><a class="reference internal" href="_modules/BinPy/ic/base.html#pinlist_quick"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.base.pinlist_quick" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines a method to quickly convert a list of logic states to pin instances</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-BinPy.ic.series_4000">
+<span id="binpy-ic-series-4000-module"></span><h2>BinPy.ic.series_4000 module<a class="headerlink" href="#module-BinPy.ic.series_4000" title="Permalink to this headline">¶</a></h2>
+<p>This module has all the classes of ICs belonging to 4000 series.</p>
+<p>Please note that the length of list self.pins is 1 more than the number of actual pins. This is so because pin0
+is not used as a general term referring to the first pin of the IC. Zeroth index of the self.pins is not being used.</p>
+<dl class="class">
+<dt id="BinPy.ic.series_4000.IC_4081">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_4000.</tt><tt class="descname">IC_4081</tt><a class="reference internal" href="_modules/BinPy/ic/series_4000.html#IC_4081"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_4000.IC_4081" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Quad 2 Input AND gate IC</p>
+<dl class="method">
+<dt id="BinPy.ic.series_4000.IC_4081.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_4000.html#IC_4081.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_4000.IC_4081.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="BinPy.ic.series_4000.IC_4082">
+<em class="property">class </em><tt class="descclassname">BinPy.ic.series_4000.</tt><tt class="descname">IC_4082</tt><a class="reference internal" href="_modules/BinPy/ic/series_4000.html#IC_4082"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_4000.IC_4082" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#BinPy.ic.base.Base_14pin" title="BinPy.ic.base.Base_14pin"><tt class="xref py py-class docutils literal"><span class="pre">BinPy.ic.base.Base_14pin</span></tt></a></p>
+<p>This is a Dual 4 Input AND gate IC</p>
+<dl class="method">
+<dt id="BinPy.ic.series_4000.IC_4082.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/BinPy/ic/series_4000.html#IC_4082.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#BinPy.ic.series_4000.IC_4082.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -711,19 +829,66 @@ datasheet at <a class="reference external" href="http://www.skot9000.com/ttl/dat
 </div>
 
 
+          </div>
+        </div>
       </div>
-      <div class="bottomnav">
-      
-        <p>
-        «&#160;&#160;<a href="BinPy.Shell.html">BinPy.Shell package</a>
-        &#160;&#160;::&#160;&#160;
-        <a class="uplink" href="index.html">Contents</a>
-        &#160;&#160;::&#160;&#160;
-        <a href="BinPy.tests.html">BinPy.tests package</a>&#160;&#160;»
-        </p>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">BinPy.ic package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-BinPy.ic.base">BinPy.ic.base module</a></li>
+<li><a class="reference internal" href="#module-BinPy.ic.series_4000">BinPy.ic.series_4000 module</a></li>
+<li><a class="reference internal" href="#module-BinPy.ic.series_7400">BinPy.ic.series_7400 module</a></li>
+<li><a class="reference internal" href="#binpy-ic-series-7400-1-module">BinPy.ic.series_7400_1 module</a></li>
+<li><a class="reference internal" href="#module-BinPy.ic">Module contents</a></li>
+</ul>
+</li>
+</ul>
 
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="BinPy.Shell.html"
+                        title="previous chapter">BinPy.Shell package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="BinPy.tests.html"
+                        title="next chapter">BinPy.tests package</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
       </div>
-
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="BinPy.tests.html" title="BinPy.tests package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="BinPy.Shell.html" title="BinPy.Shell package"
+             >previous</a> |</li>
+        <li><a href="index.html">Binpy Dev documentation</a> &raquo;</li>
+          <li><a href="BinPy.html" >BinPy package</a> &raquo;</li> 
+      </ul>
+    </div>
     <div class="footer">
         &copy; Copyright 2014, Binpy Developers.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.

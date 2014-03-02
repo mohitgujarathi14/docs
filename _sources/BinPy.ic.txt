@@ -12,6 +12,14 @@ BinPy.ic.base module
     :undoc-members:
     :show-inheritance:
 
+BinPy.ic.series_4000 module
+---------------------------
+
+.. automodule:: BinPy.ic.series_4000
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 BinPy.ic.series_7400 module
 ---------------------------
 
